@@ -1,0 +1,31 @@
+@import model.Post
+@(posts: Seq[Post])
+
+@frontTemplate("Shine St"){@header()} {
+
+@for(post <- posts) {
+
+<div class="view-content">
+    <div class="views-block" id="row">
+
+        <div class="markdown-preview">
+            <div class="views-field-title">
+                <h1><a href="/post/@(post.id)">@(post.title)</a></h1>
+            </div>
+
+            <div class="view-field-content">
+                @Html(post.content)
+            </div>
+        </div>
+    </div>
+</div>
+
+
+}
+
+}
+
+
+
+
+

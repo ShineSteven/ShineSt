@@ -1,0 +1,33 @@
+body {
+    //background-color: #293134;
+    background-color:  rgb(47, 51, 61);
+
+}
+
+img {
+    border: 0 none;
+}
+
+#header {
+    //background: rgba(0, 0, 0, 0) url("/assets/images/dark-light-100-bi-94b.png") repeat-x scroll left bottom;
+//background: rgb(47, 51, 61) url("/assets/images/header_1.jpg") center top;
+    height: 100px;
+    position: relative;
+}
+#header #logo img {
+    //margin-left: 246px;
+    margin-top: 5px;
+}
+#wrapper {
+    margin-left: auto;
+    margin-right: auto;
+    width: 980px;
+}
+#header-wrapper {
+    height: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 980px;
+}
+
+

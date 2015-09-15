@@ -1,0 +1,29 @@
+
+
+#secondary-links {
+    display: block;
+    float: right;
+    margin-right: 12px;
+    margin-top: 45px;
+}
+#secondary-links img {
+    opacity: 0.6;
+    padding-left: 10px;
+}
+#secondary-links img:hover {
+    opacity: 1;
+}
+#header #secondary-links a:link, #header #secondary-links a:visited, #header #secondary-links a:active {
+    color: #e8e8e8;
+    opacity: 0.8;
+}
+#header #secondary-links a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+#header #secondary-links #nav #li ul li a:link, #header #secondary-links #nav #li ul li a:visited, #header #secondary-links #nav #li ul li a:active {
+    color: #4b92bc;
+    font-size: 1.2em;
+    line-height: 1.4em;
+}

@@ -1,0 +1,27 @@
+@(title:String)(header: Html)(content: Html)
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>@title</title>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/header.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/common.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/markdown.css")">
+</head>
+<body>
+<div id="container">
+    <div class="clear-block" id="header">
+        @header
+    </div>
+    <div class="sidebar" id="sidebar-left">
+
+    </div>
+    <div class="clear-block" id="wrapper">
+        <div id="content">
+            @content
+        </div>
+    </div>
+</div>
+</body>
+</html>
