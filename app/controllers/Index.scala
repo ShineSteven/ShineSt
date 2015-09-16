@@ -12,5 +12,4 @@ class Index extends Controller {
 
     Ok(views.html.index(PostDao.getAllPost()))
   }
-
 }
