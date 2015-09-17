@@ -1,8 +1,10 @@
+@import common.Context
+@()(implicit context: Context)
 
     <div class="clear-block" id="header-wrapper">
 
 
-        <a title="Home" href="/" id="logo"><img alt="Home" src="@routes.Assets.versioned("images/ShineSt_Logo.png")"></a>
+        <a title="Home" href="@context.domain" id="logo"><img alt="Home" src="@routes.Assets.versioned("images/ShineSt_Logo.png")"></a>
 
         <div id="secondary-links">
               <a title="Home" id="tthome" href="/"><img height="16" src="@routes.Assets.versioned("images/icons/home.png")"></a>
