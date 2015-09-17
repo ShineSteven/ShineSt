@@ -1,52 +1,57 @@
 package dao
 
+import common.{GenerateModel, IOUtils, DBUtils}
+import java.sql.{Connection, PreparedStatement, ResultSet}
 
-import common.{IOUtils, DBUtils}
-import model.Post
-import scala.collection.mutable.ArrayBuffer
+import scala.util.control.NonFatal
 
 /**
  * Created by shinesteven on 2015/8/15.
  */
 object PostDao {
-  val postPath = "/usr/local/web/post/"
+  val singlePostSql = "select * from post where id = ?"
+  val allPostSql = "select * from post"
 
-  def getAllPost(): List[Post] = {
-
-    lazy val conn = DBUtils.getConnection
-    lazy val ps = conn.prepareStatement("select * from post")
-    lazy val rs = ps.executeQuery()
-    var posts = new ArrayBuffer[Post]()
-
-    try {
-      while (rs.next()) {
-        posts += Post(rs.getInt("ID"), rs.getString("TITLE"), IOUtils.readFileToStringOfLimit(postPath + rs.getString("CONTENT_FILE")))
-      }
-    } finally {
-      DBUtils.close(rs)
-      DBUtils.close(ps)
-      DBUtils.close(conn)
+  def getAllPost() = {
+    queryPost { connection =>
+      val ps = connection.prepareCall(allPostSql)
+      ps
+    } {
+      GenerateModel.post
     }
-    posts.toList
   }
 
-  def getPostById(id: Long) = {
-    lazy val conn = DBUtils.getConnection
-    lazy val ps = conn.prepareStatement("select * from post where id = ?")
-    ps.setLong(1, id)
+  def queryPostById(id: Long) = {
+    queryPost { connection =>
+      val ps = connection.prepareCall(singlePostSql)
+      ps.setLong(1, id)
+      ps
+    } {
+      GenerateModel.post
+    }
+  }
+
+  def queryPost[A](injectParameter: Connection => PreparedStatement)(storeResult: ResultSet => A): Seq[A] = {
+    lazy val conn = DBUtils.connect
+    lazy val ps = injectParameter(conn)
     lazy val rs = ps.executeQuery()
-    var result: Post = null
+    val result = scala.collection.mutable.ArrayBuffer.empty[A]
 
     try {
-      while (rs.next()) {
-        result = Post(rs.getInt("ID"), rs.getString("TITLE"), IOUtils.readFileToString(postPath + rs.getString("CONTENT_FILE")))
+      while (rs.next) {
+        result += storeResult(rs)
       }
+      result.toList
+    } catch {
+      case NonFatal(ex) =>
+        println(ex)
+        Nil
     } finally {
       DBUtils.close(rs)
       DBUtils.close(ps)
       DBUtils.close(conn)
     }
 
-    result
+
   }
 }
