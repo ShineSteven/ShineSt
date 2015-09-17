@@ -1,7 +1,8 @@
 @import model.Post
-@(posts: Seq[Post])
+@import common.Context
+@(posts: Seq[Post])(implicit context: Context)
 
-@frontTemplate("Shine St"){@header()} {
+@frontTemplate("Shine St") {
 
 @for(post <- posts) {
 
@@ -10,7 +11,7 @@
 
         <div class="markdown-preview">
             <div class="views-field-title">
-                <h1><a href="/post/@(post.id)">@(post.title)</a></h1>
+                <h1><a href="@context.domain/@(post.id)">@(post.title)</a></h1>
             </div>
 
             <div class="view-field-content">
