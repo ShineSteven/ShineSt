@@ -5,7 +5,7 @@ import play.api.mvc.{Request}
 trait ProviderContext {
   implicit def context[A](implicit request: Request[A]): Context = {
     val test = request.getQueryString("steven")
-    Context("www.shinest.cc", Map("steven" -> test.getOrElse("water")))
+    Context("http://shinest.cc", Map("steven" -> test.getOrElse("water")))
   }
 }
 
