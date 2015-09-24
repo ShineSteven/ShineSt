@@ -10,7 +10,6 @@ import play.api.mvc.{Action, Controller}
  */
 class Index extends Controller  with ProviderContext{
   def index = Action {implicit reqeust =>
-
     Ok(views.html.index(PostDao.getAllPost()))
   }
 }
