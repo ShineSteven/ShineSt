@@ -1,15 +1,18 @@
-package common
+package model
 
-import play.api.mvc.{Request}
+import play.api.mvc.Request
+import java.util.Date
+import common.DateUtils
 
 trait ProviderContext {
-  implicit def context[A](implicit request: Request[A]): Context = {
+  implicit def customizeContext[A](implicit request: Request[A]): CustomizeContext = {
     val test = request.getQueryString("steven")
-    Context("http://shinest.cc", Map("steven" -> test.getOrElse("water")))
+    CustomizeContext("http://shinest.cc", Map("steven" -> test.getOrElse("water")), DateUtils.baseDateFormat)
   }
 }
 
-case class Context(domain: String, header: Map[String, String])
+case class CustomizeContext(domain: String, header: Map[String, String], format: Function[Date, String])
+
 /*
 
 trait ProviderContext {

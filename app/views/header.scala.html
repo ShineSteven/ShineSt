@@ -1,15 +1,15 @@
-@import common.Context
-@()(implicit context: Context)
+@import model.CustomizeContext
+@()(implicit customizeContext: CustomizeContext)
 
     <div class="clear-block" id="header-wrapper">
 
 
-        <a title="Home" href="@(context.domain)" id="logo"><img alt="Home" src="@routes.Assets.versioned("images/logo.png")"></a>
+        <a title="Home" href="/" id="logo"><img alt="Home" src="@routes.Assets.versioned("images/logo.png")"></a>
 
         <div id="secondary-links">
-              <a title="Home" id="header_home" href="@(context.domain)"><img height="16" src="@routes.Assets.versioned("images/icons/home.png")"></a>
-              <a title="Search" href="@(context.domain)"><img height="16" src="@routes.Assets.versioned("images/icons/search.png")"></a>
-            <a title="About ShineSt" id="header_about" href="@(context.domain)"><img height="16" src="@routes.Assets.versioned("images/icons/person.png")"></a>
+              <a title="Home" id="header_home" href="/"><img height="16" src="@routes.Assets.versioned("images/icons/home.png")"></a>
+              <a title="Search" href="/"><img height="16" src="@routes.Assets.versioned("images/icons/search.png")"></a>
+            <a title="About ShineSt" id="header_about" href="/"><img height="16" src="@routes.Assets.versioned("images/icons/person.png")"></a>
             <a title="ShineSt on Twitter" id="header_twitter" href="https://twitter.com/StevenFanChiang"><img height="16" src="@routes.Assets.versioned("images/icons/twitter.png")"></a>
         </div>
 

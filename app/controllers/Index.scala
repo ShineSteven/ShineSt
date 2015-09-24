@@ -1,7 +1,7 @@
 package controllers
 
-import common.ProviderContext
 import dao.PostDao
+import model.ProviderContext
 import play.api.Play.current
 import play.api.mvc.{Action, Controller}
 
