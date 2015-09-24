@@ -1,6 +1,6 @@
 @import model.Post
-@import common.Context
-@(posts: Seq[Post])(implicit context: Context)
+@import model.CustomizeContext
+@(posts: Seq[Post])(implicit customizeContext: CustomizeContext)
 
 @frontTemplate("Shine St") {
 
@@ -11,11 +11,16 @@
 
         <div class="markdown-preview">
             <div class="views-field-title">
-                <h1><a href="@(context.domain)/post/@(post.id)">@(post.title)</a></h1>
+                <h1><a href="/post/@(post.id)">@(post.title)</a></h1>
             </div>
 
             <div class="view-field-content">
                 @Html(post.content)
+            </div>
+            <div class="post_tail">
+                <br>
+                <hr>
+                <h6 id="create_at">create at <em>@(customizeContext.format(post.createAt))</em></h6>
             </div>
         </div>
     </div>

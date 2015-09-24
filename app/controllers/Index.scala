@@ -1,7 +1,7 @@
 package controllers
 
-import common.ProviderContext
 import dao.PostDao
+import model.ProviderContext
 import play.api.Play.current
 import play.api.mvc.{Action, Controller}
 
@@ -10,7 +10,6 @@ import play.api.mvc.{Action, Controller}
  */
 class Index extends Controller  with ProviderContext{
   def index = Action {implicit reqeust =>
-
     Ok(views.html.index(PostDao.getAllPost()))
   }
 }
