@@ -2,7 +2,7 @@
 @import model.CustomizeContext
 @(post: Post)(implicit customizeContext: CustomizeContext)
 
-@frontTemplate(s"${post.title} || Shine St") {
+@front_template(s"${post.title} || Shine St") {
 
 <div class="view-content">
     <div class="views-block" id="row">
@@ -16,10 +16,14 @@
                 @Html(post.content)
             </div>
             <div class="post_tail">
-                <br>
                 <hr>
                 <h6 id="create_at">create at <em>@(customizeContext.format(post.createAt))</em></h6>
             </div>
+            <br>
+            <div class="comment">
+                @comment_disqus()
+            </div>
+            <hr>
         </div>
     </div>
 </div>

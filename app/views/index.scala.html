@@ -2,7 +2,7 @@
 @import model.CustomizeContext
 @(posts: Seq[Post])(implicit customizeContext: CustomizeContext)
 
-@frontTemplate("Shine St") {
+@front_template("Shine St") {
 
 @for(post <- posts) {
 
@@ -18,7 +18,6 @@
                 @Html(post.content)
             </div>
             <div class="post_tail">
-                <br>
                 <hr>
                 <h6 id="create_at">create at <em>@(customizeContext.format(post.createAt))</em></h6>
             </div>
