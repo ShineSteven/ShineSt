@@ -23,7 +23,7 @@ object PostDao {
 
   def queryPostById(id: Long) = {
     queryPost { connection =>
-      val ps = connection.prepareCall(singlePostSql)
+      val ps = connection.prepareStatement(singlePostSql)
       ps.setLong(1, id)
       ps
     } {

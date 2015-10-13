@@ -13,7 +13,6 @@ object IOUtils {
 
     val source = Source.fromFile(fileName)
     nonFatalCatch[String] andFinally { source.close() } opt { source.mkString } getOrElse("unknow content")
-
   }
 
   def readFileToStringOfLimit(fileName :String) = {
