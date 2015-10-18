@@ -1,7 +1,8 @@
 package dao
 
-import common.{GenerateModel, IOUtils, DBUtils}
 import java.sql.{Connection, PreparedStatement, ResultSet}
+
+import common.{DBUtils, GenerateModel}
 
 import scala.util.control.NonFatal
 
@@ -10,7 +11,7 @@ import scala.util.control.NonFatal
  */
 object PostDao {
   val singlePostSql = "select * from post where id = ?"
-  val allPostSql = "select * from post"
+  val allPostSql = "select * from post order by id desc"
 
   def getAllPost() = {
     queryPost { connection =>

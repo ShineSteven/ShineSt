@@ -15,12 +15,16 @@ libraryDependencies ++= Seq(
 
 libraryDependencies += "mysql" % "mysql-connector-java" % "5.1.36"
 
+libraryDependencies += "com.amazonaws" % "aws-java-sdk" % "1.10.27"
+
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
 
 // Play provides two styles of routers, one expects its actions to be injected, the
 // other, legacy style, accesses its actions statically.
 routesGenerator := InjectedRoutesGenerator
 
+
+//package
 import AssemblyKeys._
 
 assemblySettings
