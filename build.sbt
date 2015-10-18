@@ -15,7 +15,7 @@ libraryDependencies ++= Seq(
 
 libraryDependencies += "mysql" % "mysql-connector-java" % "5.1.36"
 
-libraryDependencies += "com.amazonaws" % "aws-java-sdk" % "1.10.27"
+libraryDependencies += "com.amazonaws" % "aws-java-sdk" % "1.10.27" exclude("commons-logging","commons-logging")
 
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
 
