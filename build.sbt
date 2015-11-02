@@ -1,3 +1,5 @@
+import Dependency._
+
 name := """ShineSt"""
 
 version := "1.0-SNAPSHOT"
@@ -13,9 +15,12 @@ libraryDependencies ++= Seq(
   specs2 % Test
 )
 
-libraryDependencies += "mysql" % "mysql-connector-java" % "5.1.36"
-
-libraryDependencies += "com.amazonaws" % "aws-java-sdk" % "1.10.27" exclude("commons-logging","commons-logging")
+libraryDependencies ++= Seq(
+  mysql,
+  aws,
+  joda,
+  lang3
+)
 
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
 
