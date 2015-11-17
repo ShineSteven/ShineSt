@@ -1,13 +1,26 @@
 @import model.CustomizeContext
 @()(implicit customizeContext: CustomizeContext)
 
-    <div class="clear-block" id="header-wrapper">
-        <a title="Home" href="/" id="logo"><img alt="Home" src="@routes.Assets.versioned("images/logo.png")"></a>
 
-        <div id="secondary-links">
-              <a title="Home" id="header_home" href="/"><img height="16" src="@routes.Assets.versioned("images/icons/home.png")"></a>
-              <a title="Search" href="/"><img height="16" src="@routes.Assets.versioned("images/icons/search.png")"></a>
-            <a title="About ShineSt" id="header_about" href="/"><img height="16" src="@routes.Assets.versioned("images/icons/person.png")"></a>
-            <a title="ShineSt on Twitter" id="header_twitter" href="https://twitter.com/StevenFanChiang"><img height="16" src="@routes.Assets.versioned("images/icons/twitter.png")"></a>
+    <nav class="ui text menu navbar">
+        <div class="left menu">
+            <a href="/" class="item">
+                <img class="ui image" src="/assets/images/logo.png">
+            </a>
         </div>
-    </div>
+        <div class="right menu">
+
+            <a href="/" class="item">
+                <img class="ui image" height="16" src="/assets/images/icons/home.png">
+            </a>
+            <a href="https://twitter.com/StevenFanChiang" class="item">
+                <img class="ui image" height="16" src="/assets/images/icons/person.png">
+            </a>
+            <a href="https://twitter.com/StevenFanChiang" class="item">
+                <img class="ui image" height="16" src="/assets/images/icons/twitter.png">
+            </a>
+            <a href="" class="item">
+                <img class="ui image" height="16" src="/assets/images/icons/search.png">
+            </a>
+        </div>
+    </nav>
