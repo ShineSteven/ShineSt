@@ -10,3 +10,5 @@ GET     /post/:id                      controllers.PostDetail.view(id: Long)
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
 GET     /check                      @controllers.CheckEnv.check
+
+GET     /sem/:id                        @controllers.CheckEnv.show(id:Long)
