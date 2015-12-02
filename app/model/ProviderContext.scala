@@ -7,11 +7,11 @@ import common.DateUtils
 trait ProviderContext {
   implicit def customizeContext[A](implicit request: Request[A]): CustomizeContext = {
     val test = request.getQueryString("steven")
-    CustomizeContext("http://shinest.cc", Map("steven" -> test.getOrElse("water")), DateUtils.baseDateFormat)
+    CustomizeContext("http://shinest.cc", Map("steven" -> test.getOrElse("water")))
   }
 }
 
-case class CustomizeContext(domain: String, header: Map[String, String], format: Function[Date, String])
+case class CustomizeContext(domain: String, header: Map[String, String])
 
 /*
 

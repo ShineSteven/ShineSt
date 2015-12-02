@@ -1,13 +1,12 @@
 package controllers
 
 
-//import com.google.inject.Singleton
+
 
 import com.google.inject.Singleton
 import com.typesafe.config.ConfigFactory
 import dao.PostDao
-import model.{ProviderContext, CustomizeContext}
-
+import model.ProviderContext
 import play.api.mvc.{Action, Controller}
 
 @Singleton
@@ -22,8 +21,8 @@ class CheckEnv extends Controller  with ProviderContext {
   }
 
 
-  def show(id: Long) = Action { implicit request =>
-    Ok(views.html.sem_test_2(PostDao.queryPostById(id).head))
+  def show(id: Int) = Action { implicit request =>
+    Ok(views.html.sem_test_2(PostDao.queryPostById(id)))
   }
 
 }
