@@ -4,8 +4,6 @@
 @(post: Post)(implicit customizeContext: CustomizeContext)
 
 
-
-
 @front(s"${post.title}") {
 
 <div class="post">
@@ -23,17 +21,26 @@
         <hr>
 
         <div class="ui grid">
-            <div class="six wide column"></div>
-            <div class="five wide column">
-                @if(post.updateAt.isDefined) {
-                <div class="ui label">
-                    update at @(DateUtils.formatOptionDateTime(post.updateAt).getOrElse(""))
+            <div class="row">
+                <div class="six wide column"></div>
+                <div class="five wide column">
+                    @if(post.updateAt.isDefined) {
+                    <div class="ui label">
+                        update at @(DateUtils.formatOptionDateTime(post.updateAt).getOrElse(""))
+                    </div>
+                    }
                 </div>
-                }
+                <div class="five wide column">
+                    <div class="ui label">
+                        create at @(DateUtils.formatOptionDateTime(post.createAt).getOrElse(""))
+                    </div>
+                </div>
             </div>
-            <div class="five wide column">
-                <div class="ui label">
-                    create at @(DateUtils.formatOptionDateTime(post.createAt).getOrElse(""))
+            <div class="row">
+                <div class="column">
+                    <div class="comment">
+                        @comment_disqus()
+                    </div>
                 </div>
             </div>
 
