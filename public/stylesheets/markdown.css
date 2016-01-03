@@ -449,15 +449,15 @@ pre.editor-colors[mini] .scroll-view,
       <style>.markdown-preview:not([data-use-github-style]) { padding: 2em; font-size: 1.2em; color: rgb(238, 238, 238); overflow: auto; background-color: rgb(37, 49, 61); }
 .markdown-preview:not([data-use-github-style]) &gt; :first-child { margin-top: 0px; }
 .markdown-preview:not([data-use-github-style]) h1, .markdown-preview:not([data-use-github-style]) h2, .markdown-preview:not([data-use-github-style]) h3, .markdown-preview:not([data-use-github-style]) h4, .markdown-preview:not([data-use-github-style]) h5, .markdown-preview:not([data-use-github-style]) h6 { line-height: 1.2; margin-top: 1.5em; margin-bottom: 0.5em; color: rgb(255, 255, 255); }
-.markdown-preview:not([data-use-github-style]) h1 { font-size: 2.4em; font-weight: 300; }
-.markdown-preview:not([data-use-github-style]) h2 { font-size: 1.8em; font-weight: 400; }
-.markdown-preview:not([data-use-github-style]) h3 { font-size: 1.5em; font-weight: 500; }
-.markdown-preview:not([data-use-github-style]) h4 { font-size: 1.2em; font-weight: 600; }
-.markdown-preview:not([data-use-github-style]) h5 { font-size: 1.1em; font-weight: 600; }
-.markdown-preview:not([data-use-github-style]) h6 { font-size: 1em; font-weight: 600; }
+.markdown-preview:not([data-use-github-style]) h1 { font-size: 2.4em; font-weight: 300; color:#ffff00; }
+.markdown-preview:not([data-use-github-style]) h2 { font-size: 1.8em; font-weight: 400; color:#ffff00; }
+.markdown-preview:not([data-use-github-style]) h3 { font-size: 1.5em; font-weight: 500; color:#ffd500; }
+.markdown-preview:not([data-use-github-style]) h4 { font-size: 1.3em; font-weight: 600; color:#ffd500; }
+.markdown-preview:not([data-use-github-style]) h5 { font-size: 1.1em; font-weight: 600; color:#ffd500; }
+.markdown-preview:not([data-use-github-style]) h6 { font-size: 1em; font-weight: 600; color:#ffd500; }
 .markdown-preview:not([data-use-github-style]) strong { color: rgb(255, 255, 255); }
 .markdown-preview:not([data-use-github-style]) del { color: rgb(197, 197, 197); }
-.markdown-preview:not([data-use-github-style]) a, .markdown-preview:not([data-use-github-style]) a code { color: rgb(255, 255, 255); }
+.markdown-preview:not([data-use-github-style]) a, .markdown-preview:not([data-use-github-style]) a code { text-decoration: underline; color: #00abff; }
 .markdown-preview:not([data-use-github-style]) img { max-width: 100%; }
 .markdown-preview:not([data-use-github-style]) &gt; p { margin-top: 0px; margin-bottom: 1.5em; }
 .markdown-preview:not([data-use-github-style]) &gt; ul, .markdown-preview:not([data-use-github-style]) &gt; ol { margin-bottom: 1.5em; }
@@ -466,8 +466,8 @@ pre.editor-colors[mini] .scroll-view,
 .markdown-preview:not([data-use-github-style]) table { margin: 1.5em 0px; }
 .markdown-preview:not([data-use-github-style]) th { color: rgb(255, 255, 255); }
 .markdown-preview:not([data-use-github-style]) th, .markdown-preview:not([data-use-github-style]) td { padding: 0.66em 1em; border: 1px solid rgb(68, 90, 112); }
-.markdown-preview:not([data-use-github-style]) code { color: rgb(255, 255, 255); background-color: rgb(52, 69, 86); }
-.markdown-preview:not([data-use-github-style]) pre.editor-colors { margin: 1.5em 0px; padding: 1em; font-size: 0.92em; border-radius: 3px; background-color: rgb(45, 59, 74); }
+.markdown-preview:not([data-use-github-style]) code { color: rgb(255, 255, 255); background-color: #43596e; }
+.markdown-preview:not([data-use-github-style]) pre.editor-colors { margin: 1.5em 0px; padding: 1em; font-size: 0.92em; border-radius: 3px; background-color: #43596e; }
 .markdown-preview:not([data-use-github-style]) kbd { color: rgb(255, 255, 255); border-width: 1px 1px 2px; border-style: solid; border-color: rgb(68, 90, 112) rgb(68, 90, 112) rgb(56, 74, 93); background-color: rgb(52, 69, 86); }
 .markdown-preview[data-use-github-style] { font-family: &#39;Helvetica Neue&#39;, Helvetica, &#39;Segoe UI&#39;, Arial, freesans, sans-serif; line-height: 1.6; word-wrap: break-word; padding: 30px; font-size: 16px; color: rgb(51, 51, 51); overflow: scroll; background-color: rgb(255, 255, 255); }
 .markdown-preview[data-use-github-style] &gt; :first-child { margin-top: 0px !important; }
