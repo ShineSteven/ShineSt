@@ -20,9 +20,8 @@ class CheckEnv extends Controller  with ProviderContext {
     Ok(s"current env ${config.getString("env.debug")} : $currentCount")
   }
 
-
   def show(id: Int) = Action { implicit request =>
-    Ok(views.html.sem_test_2(PostDao.queryPostById(id)))
+    Ok(s"current env ${config.getString("env.debug")} : $currentCount")
   }
 
 }
