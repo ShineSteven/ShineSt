@@ -6,7 +6,10 @@ object Dependency {
   val mysql = "mysql" % "mysql-connector-java" % "5.1.37"
   val joda = "joda-time" % "joda-time" % "2.9"
   val lang3 = "org.apache.commons" % "commons-lang3" % "3.4"
-  val aws = "com.amazonaws" % "aws-java-sdk" % "1.10.27" exclude("commons-logging","commons-logging")
+  val aws = "com.amazonaws" % "aws-java-sdk" % "1.10.27" exclude("commons-logging", "commons-logging")
+//  val jsoup = "org.jsoup" % "jsoup" % "1.8.3"
+val httpClient=  "org.apache.httpcomponents" % "httpclient" % "4.5.2"
+
 }
 
 /**
@@ -17,20 +20,24 @@ object Dependency {
   *
   * 為了讓所有子專案都可以使用到父專案的值，因此將專案的設定改到這。
   */
-object DashboardBuild extends Build {
+object ShineStBuild extends Build {
 
   lazy val commonSettings = Seq(
     organization := "shine.st",
     version := "1.0.1.SNAPSHOT",
-    scalaVersion := "2.11.8",
-    name := "web"
+    scalaVersion := "2.11.8"
+  )
+
+  lazy val batchDependency = Seq(
+    Dependency.joda,
+    Dependency.httpClient
   )
 
 
-//  lazy val batch = (project in file("batch-task")).settings(commonSettings: _*).dependsOn(common)
-lazy val batch = (project in file("batch")).settings(commonSettings: _*).settings(
-  libraryDependencies ++= Seq(Dependency.joda)
-)
+  //  lazy val batch = (project in file("batch-task")).settings(commonSettings: _*).dependsOn(common)
+  lazy val batch = (project in file("batch")).settings(commonSettings: _*).settings(
+    libraryDependencies ++= batchDependency
+  )
 
   //  lazy val root = (project in file(".")).enablePlugins(PlayScala).aggregate(common, batch, akka_compute).settings(commonSettings: _*).dependsOn(common).dependsOn(akka_compute)
   lazy val root = (project in file(".")).enablePlugins(PlayScala).aggregate(batch).settings(commonSettings: _*)

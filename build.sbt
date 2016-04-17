@@ -1,6 +1,6 @@
 import Dependency._
 
-name := """ShineSt2"""
+name := """ShineSt"""
 
 
 libraryDependencies ++= Seq(
