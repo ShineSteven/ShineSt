@@ -8,6 +8,6 @@ import model.Post
 
 object GenerateModel {
   def post(rs: ResultSet) = {
-    Post(rs.getInt("ID"), rs.getString("TITLE"), IOUtils.inputStreamToString(S3.getBucketObject(rs.getString("CONTENT_FILE")).getObjectContent), Option(rs.getTimestamp("create_at")),Option(rs.getTimestamp("update_at")))
+    Post(rs.getInt("ID"), rs.getString("TITLE"), rs.getString("CONTENT_FILE"),IOUtils.inputStreamToString(S3.getBucketObject(rs.getString("CONTENT_FILE")).getObjectContent), Option(rs.getTimestamp("create_at")),Option(rs.getTimestamp("update_at")))
   }
 }
