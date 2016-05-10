@@ -24,7 +24,6 @@ object ShineStBuild extends Build {
 
   lazy val commonSettings = Seq(
     organization := "shine.st",
-    version := "1.0.1.SNAPSHOT",
     scalaVersion := "2.11.8"
   )
 

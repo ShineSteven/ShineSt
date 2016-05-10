@@ -1,7 +1,7 @@
 import Dependency._
 
 name := """ShineSt"""
-
+version := "1.0.1.RELEASE",
 
 libraryDependencies ++= Seq(
   jdbc,
