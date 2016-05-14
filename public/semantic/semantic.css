@@ -291,7 +291,7 @@ code,
 kbd,
 pre,
 samp {
-  font-family: Consolas, PingFangTC, monospace, monospace;
+  font-family: 'PingFang TC', Consolas, monospace, monospace;
   font-size: 1em;
 }
 
@@ -4583,7 +4583,7 @@ input::selection {
 /* Text Container */
 
 .ui.text.container {
-  font-family: 'PingFangTC', 'Meiryo', 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-family: 'PingFang TC', 'Meiryo', 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
   max-width: 900px !important;
   line-height: 1.5;
 }
