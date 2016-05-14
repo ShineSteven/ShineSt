@@ -291,7 +291,7 @@ code,
 kbd,
 pre,
 samp {
-  font-family: monospace, monospace;
+  font-family: Consolas, PingFangTC, monospace, monospace;
   font-size: 1em;
 }
 
