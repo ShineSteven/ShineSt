@@ -1,4 +1,4 @@
-package common
+package shine.st.blog.common
 
 import java.io.InputStream
 
@@ -17,7 +17,7 @@ object IOUtils {
   }
 
   def readFileToStringOfLimit(fileName :String) = {
-    val limit = ParseUtils.parseInt(current.configuration.getString("index.post.limit").get)
+    val limit = NumberUtils.parseInt(current.configuration.getString("index.post.limit").get)
     val source = Source.fromFile(fileName)
 //println( source.getLines().take(limit.getOrElse(10)).mkString)
     nonFatalCatch[String] andFinally { source.close() } opt { source.getLines().take(limit.getOrElse(10)).mkString } getOrElse("unknow content")

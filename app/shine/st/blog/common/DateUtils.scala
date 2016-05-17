@@ -1,7 +1,9 @@
-package common
+package shine.st.blog.common
 
 import java.text.SimpleDateFormat
 import java.util.Date
+
+import org.joda.time.DateTime
 
 import scala.util.Try
 
@@ -33,8 +35,14 @@ object DateUtils {
 
   def formatOptionDateTime(date: Option[Date], pattern: String = DateTime) = {
     date match {
-      case Some(c) => format(c,pattern)
+      case Some(c) => format(c, pattern)
       case None => None
     }
+  }
+
+  def newDateTimeWithOpt(date: Date) = {
+    Try {
+      new DateTime(date.getTime)
+    }.toOption
   }
 }

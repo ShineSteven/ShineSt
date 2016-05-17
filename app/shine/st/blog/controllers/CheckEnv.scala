@@ -1,13 +1,13 @@
-package controllers
+package shine.st.blog.controllers
 
 
 
 
 import com.google.inject.Singleton
 import com.typesafe.config.ConfigFactory
-import dao.PostDao
-import model.ProviderContext
+import shine.st.blog.dao.PostDao
 import play.api.mvc.{Action, Controller}
+import shine.st.blog.common.ProviderContext
 
 @Singleton
 class CheckEnv extends Controller  with ProviderContext {

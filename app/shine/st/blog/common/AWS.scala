@@ -1,4 +1,4 @@
-package common
+package shine.st.blog.common
 
 import com.amazonaws.services.s3.AmazonS3Client
 import play.api.Play._
