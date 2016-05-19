@@ -1,14 +1,14 @@
-@import shine.st.blog.model.Post
-@import shine.st.blog.model.CustomizeContext
+@import shine.st.blog.model.vo.PostVO
+@import shine.st.blog.common.CustomizeContext
 @import shine.st.blog.common.DateUtils
-@(post: Post)(implicit customizeContext: CustomizeContext)
+@(post: PostVO)(implicit customizeContext: CustomizeContext)
 
 
 @front(s"${post.title}") {
 
 <div class="post">
     <div class="post title">
-        <a class="ui huge teal header" href="/post/scala/@(post.contentFile)">@(post.title)</a>
+        <a class="ui huge teal header" href="/post/scala/@(post.content)">@(post.title)</a>
     </div>
 
     <div class="markdown-preview">

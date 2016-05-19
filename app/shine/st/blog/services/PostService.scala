@@ -12,16 +12,20 @@ import shine.st.blog.common.IOUtils
   */
 object PostService {
   def all() = {
-
+    PostDao.all().map { post => transfer(post) }
   }
 
   def queryById(id: Int) = {
     PostDao.queryById(id) match {
       case Some(post) =>
-        val content = IOUtils.inputStreamToString(S3.getBucketObject(post.contentFile).getObjectContent)
-        val category = CategoryDao.queryById(post.categoryId)
-        Option(PostVO(post.id, post.title, content, post.createAt, post.updateAt, category))
+        Option(transfer(post))
       case None => None
     }
+  }
+
+  private def transfer(post: Post) = {
+    val content = IOUtils.inputStreamToString(S3.getBucketObject(post.contentFile).getObjectContent)
+    val category = CategoryDao.queryById(post.categoryId).get
+    PostVO(post.id, post.title, content, post.createAt, post.updateAt, category)
   }
 }

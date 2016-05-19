@@ -3,20 +3,15 @@ package shine.st.blog.dao
 import java.sql.{Connection, PreparedStatement, ResultSet}
 
 import shine.st.blog.common.{DBUtils, DevConnectionPool}
-import shine.st.database.{DBUtils, DevConnectionPool}
-import sun.tools.tree.FinallyStatement
-
-import scala.util.Try
-import scala.util.control.NonFatal
 
 
-trait Query[A] {
+trait Query {
   implicit def connect = {
     println("trait get connection")
     DevConnectionPool.getConnection()
   }
 
-  def query[B](sql: String)(p: PreparedStatement => PreparedStatement)(r: ResultSet => A)(implicit c: Connection): B = {
+  def query[A](sql: String)(p: PreparedStatement => PreparedStatement)(r: ResultSet => A)(implicit c: Connection): A = {
     lazy val conn = c
     lazy val ps = p(conn.prepareStatement(sql))
     lazy val rs = ps.executeQuery()
