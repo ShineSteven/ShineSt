@@ -13,4 +13,8 @@ GET     /check                      @shine.st.blog.controllers.CheckEnv.check
 
 GET     /sem/:id                        @shine.st.blog.controllers.CheckEnv.show(id:Int)
 
+GET     /category                         @shine.st.blog.controllers.Category.count
+
+GET     /javascriptRoutes       shine.st.blog.controllers.Common.javascriptRoutes
+
 GET     /template                         @shine.st.blog.controllers.Index.template

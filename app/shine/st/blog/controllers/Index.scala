@@ -1,6 +1,5 @@
 package shine.st.blog.controllers
 
-import shine.st.blog.dao.PostDao
 import play.api.mvc.{Action, Controller}
 import shine.st.blog.common.ProviderContext
 import shine.st.blog.services.PostService
@@ -15,6 +14,7 @@ class Index extends Controller  with ProviderContext{
   }
 
   def template = Action {implicit reqeust =>
+    routes.javascript.Category
     Ok(shine.st.blog.views.html.template("shine/st/blog/test"))
   }
 }

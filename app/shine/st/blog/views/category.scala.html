@@ -1,55 +1,20 @@
-@import shine.st.blog.model.vo.PostVO
+@import shine.st.blog.model.vo.CategoryVO
 @import shine.st.blog.common.CustomizeContext
-@import shine.st.blog.common.DateUtils
-@(post: PostVO)(implicit customizeContext: CustomizeContext)
+@import shine.st.blog.common.DateTimeUtils
 
+@(categoryVOList: List[CategoryVO])
 
-@front(s"${post.title}") {
-
-<div class="post">
-    <div class="post title">
-        <a class="ui huge teal header" href="/post/scala/@(post.content)">@(post.title)</a>
-    </div>
-
-    <div class="markdown-preview">
-        <div class="post content">
-            @Html(post.content)
+<div class="ui list">
+    <h3 class="ui yellow header">Categories</h3>
+@for(categoryVO <- categoryVOList) {
+    <div class="item">
+        <div class="content">
+            <a href="/@categoryVO.name.toLowerCase()">@categoryVO.name (@categoryVO.count)</a>
         </div>
     </div>
-
-    <div class="post tail">
-        <hr>
-
-        <div class="ui grid">
-            <div class="row">
-                <div class="six wide column"></div>
-                <div class="five wide column">
-                    @if(post.updateAt.isDefined) {
-                    <div class="ui label">
-                        update at @(DateUtils.formatOptionDateTime(post.updateAt).getOrElse(""))
-                    </div>
-                    }
-                </div>
-                <div class="five wide column">
-                    <div class="ui label">
-                        create at @(DateUtils.formatOptionDateTime(post.createAt).getOrElse(""))
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="column">
-                    <div class="comment">
-                        @comment_disqus()
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
+}
 </div>
 
-}
 
 
 
