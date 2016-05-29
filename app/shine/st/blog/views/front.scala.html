@@ -1,4 +1,5 @@
-@import model.CustomizeContext
+@import shine.st.blog.common.CustomizeContext
+@import play.api.mvc.{Action, Controller}
 @(title:String)(content: Html)(implicit customizeContext: CustomizeContext)
 
 <!DOCTYPE html>
@@ -11,6 +12,9 @@
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="/assets/semantic/semantic.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+    <script type="text/javascript" src="@shine.st.blog.controllers.routes.Common.javascriptRoutes"></script>
+    <script type="text/javascript" src="/assets/javascripts/main.js"></script>
 
     <link rel="stylesheet" type="text/css" href="/assets/semantic/semantic.css">
     <link rel="stylesheet" type="text/css" href="/assets/stylesheets/markdown.css">
@@ -42,17 +46,42 @@
             margin-bottom:3em;
         }
 
-
     </style>
 </head>
 <body>
-<div class="ui main text container">
+<div class="ui grid">
+    <div class="sixteen column row">
+        <div class="one wide column"></div>
+        <div class="two wide column"></div>
+        <div class="eleven wide column">
+
+<!--<div class="ui main text container">-->
     @header()
+    <!--</div>-->
+        </div>
+        <div class="two wide column"></div>
     </div>
+
+    <div class="sixteen column row">
+        <div class="one wide column"></div>
+        <div class="two wide column">
+            <div class="ui one column grid">
+                <div class="column"></div>
+                <div class="column" id="category">
+                    ddd
+                </div>
+            </div>
+        </div>
+        <div class="eleven wide column">
 
 <div class="ui text container">
     @content
     </div>
+        </div>
+        <div class="two wide column"></div>
+
+    </div>
+</div>
 
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

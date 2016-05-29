@@ -1,0 +1,20 @@
+@import shine.st.blog.model.vo.CategoriesVO
+@import shine.st.blog.common.CustomizeContext
+@import shine.st.blog.common.DateTimeUtils
+
+@(categories: List[CategoriesVO])
+
+<div class="ui list">
+    <h3 class="ui yellow header">Categories</h3>
+    @for(vo <- categories) {
+    <div class="item">
+        <div class="content">
+            <a href="/post/@vo.name.toLowerCase()">@vo.name (@vo.count)</a>
+        </div>
+    </div>
+    }
+</div>
+
+
+
+
