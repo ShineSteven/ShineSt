@@ -1,0 +1,483 @@
+@import shine.st.blog.common.CustomizeContext
+@(title:String)(implicit customizeContext: CustomizeContext)
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta content="text/html" charset="UTF-8">
+    <meta name="keywords" content="Scala tutorials"/>
+    <title>shinest.cc | Scala Tutorials | @title</title>
+
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="/assets/semantic/semantic.js"></script>
+    <script type="text/javascript"
+            src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+    <link rel="stylesheet" type="text/css" href="/assets/semantic/semantic.css">
+    <link rel="stylesheet" type="text/css" href="/assets/stylesheets/markdown.css">
+
+    <style type="text/css">
+
+        body {
+        background-color: rgb(41,49,52);
+        }
+        .main.container {
+        margin-top: 1em;
+        }
+
+        .ui.footer.segment {
+        margin: 5em 0em 0em;
+        padding: 5em 0em;
+        }
+
+        .comment {
+          margin-top: 2.5em;
+        }
+
+        .post.title {
+            margin-bottom:1.5em;
+        }
+
+        .post.tail {
+            margin-top: 1em;
+            margin-bottom:3em;
+        }
+
+
+
+
+
+
+
+    </style>
+</head>
+<body>
+<div class="ui grid">
+    <div class="sixteen column row">
+        <div class="one wide column"></div>
+        <div class="two wide column"></div>
+        <div class="eleven wide column">
+
+            <!--<div class="ui menu text container">-->
+                <nav class="ui text menu navbar">
+                    <div class="left menu">
+                        <a href="/" class="item">
+                            <img class="ui image" src="/assets/images/logo.png">
+                        </a>
+                    </div>
+                    <div class="right menu">
+
+                        <a href="/" class="item">
+                            <img class="ui image" height="16" src="/assets/images/icons/home.png">
+                        </a>
+                        <a href="https://twitter.com/StevenFanChiang" class="item">
+                            <img class="ui image" height="16" src="/assets/images/icons/person.png">
+                        </a>
+                        <a href="https://twitter.com/StevenFanChiang" class="item">
+                            <img class="ui image" height="16" src="/assets/images/icons/twitter.png">
+                        </a>
+                        <a href="" class="item">
+                            <img class="ui image" height="16" src="/assets/images/icons/search.png">
+                        </a>
+                    </div>
+                </nav>
+            <!--</div>-->
+        </div>
+        <div class="two wide column"></div>
+    </div>
+    <div class="sixteen column row">
+        <div class="one wide column"></div>
+        <div class="two wide column">
+            <div class="ui one column grid">
+                <div class="column"></div>
+                <div class="column"></div>
+            </div>
+        </div>
+        <div class="eleven wide column">
+
+
+            <div class="ui text container">
+                <div class="post">
+                    <div class="post title">
+                        <a href="/post/scala/higher_order_function_p2.md.html" class="ui huge teal header">Scala-High-order
+                            Function - P2</a>
+                    </div>
+
+                    <div class="markdown-preview">
+                        <div class="post content">
+                            <h2 id="anonymous-function-function-literal-">anonymous function(function literal)</h2>
+                            <p>終於到了Scala語法中很天書的部份了，先來一個嚇嚇人</p>
+                            <pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span
+                                    class="meta paragraph text"><span>def&nbsp;foldRightViaFoldLeft_1[A,&nbsp;B](l:&nbsp;List[A],&nbsp;z:&nbsp;B)(f:&nbsp;(A,&nbsp;B)&nbsp;=&gt;&nbsp;B):&nbsp;B&nbsp;=&nbsp;{</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+                                    class="meta paragraph text"><span>foldLeft(l,&nbsp;(b:&nbsp;B)&nbsp;=&gt;&nbsp;b)((g,&nbsp;a)&nbsp;=&gt;&nbsp;(b&nbsp;=&gt;&nbsp;g(f(a,&nbsp;b))))(z)</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;&nbsp;</span><span
+                                    class="meta paragraph text"><span>}</span></span></span></div></pre>
+                            <p>其實大原則上都是一樣的，</p>
+                            <p>先來討論上部份的<code>findFirst(intArr, (n: Int) =&gt; n == 5)</code> 這個寫法，</p>
+                            <p><code>(n: Int) =&gt; n == 5</code>稱為匿名函數(anonymous function)，</p>
+                            <p>當你寫HOF時，通常我們都是使用匿名函數(anonymous function) 來實作函數內容，</p>
+                            <p>取代你直接丟method進去的做法，像前面曾經練習過的<code>formatResult("absolute value", -11, abs)</code>
+                                範例是將<code>abs</code>當做參數傳入，</p>
+                            <p><code>(n:Int) =&gt; n == 5</code> 的寫法不難理解，</p>
+                            <p>該function接受一個Int型態的參數傳入，並判斷n是否等於5，回傳Boolean，</p>
+                            <p><code>=&gt;</code>左方是匿名函數的型態宣告，用括號包起來，</p>
+                            <p><code>=&gt;</code>右方是匿名函數實作本體。</p>
+                            <p>用匿名函數來實作function有2個Scala語法蜜糖提供的好處，</p>
+                            <pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span
+                                    class="meta paragraph text"><span>scala&gt;&nbsp;def&nbsp;compare(x:&nbsp;Int,&nbsp;y:&nbsp;Int,&nbsp;f:&nbsp;(Int,&nbsp;Int)&nbsp;=&gt;&nbsp;Boolean)&nbsp;=&nbsp;{</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+                                    class="meta paragraph text"><span>f(x,&nbsp;y)</span></span></span></div><div
+                                    class="line"><span
+                                    class="text plain"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+                                    class="meta paragraph text"><span>}</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>compare:&nbsp;(x:&nbsp;Int,&nbsp;y:&nbsp;Int,&nbsp;f:&nbsp;(Int,&nbsp;Int)&nbsp;=&gt;&nbsp;Boolean)Boolean</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;</span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>scala&gt;&nbsp;compare(2,&nbsp;3,&nbsp;(x:&nbsp;Int,&nbsp;y:&nbsp;Int)&nbsp;=&gt;&nbsp;x&nbsp;==&nbsp;y)</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>res14:&nbsp;Boolean&nbsp;=&nbsp;false</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;</span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>scala&gt;&nbsp;compare(5,&nbsp;5,&nbsp;(x,&nbsp;y)&nbsp;=&gt;&nbsp;x&nbsp;==&nbsp;y)</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>res15:&nbsp;Boolean&nbsp;=&nbsp;true</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;</span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>scala&gt;&nbsp;compare(5,&nbsp;5,&nbsp;_&nbsp;==&nbsp;_)</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>res34:&nbsp;Boolean&nbsp;=&nbsp;true</span></span></span></div></pre>
+                            <p>首先能省略型態，我們在HOF <code>compare</code>中己經指定f的型態了，所以用匿名函數實作時，可省略資料型態，</p>
+                            <p>
+                                第2是能使用佔位字元<code>_</code>(placeholder)寫法，只要<code>_</code>出現的順序要跟參數順序相同就好了，所以第一個<code>_</code>代表<code>x</code>，第二個<code>_</code>代表<code>y</code>。
+                            </p>
+                            <h4 id="function-object">function object</h4>
+                            <p>匿名函數(anonymous function) 也可稱為函數實字(function literal)，</p>
+                            <p>其實每個匿名函數(anonymous function) 都會生成 function object，</p>
+                            <p>每個function object都會依參數數量分別繼承<code>Function1</code> trait (類似Java的interface) 並實作method
+                                <code>apply</code>，</p>
+                            <p>method <code>apply</code> 裡頭就是執行anonymous function body，</p>
+                            <p>1個參數是實做<code>Function1</code> trait，2個參數就是<code>Function2</code> tarit， 以此類推，</p>
+                            <p>最多到<a
+                                    href="https://github.com/scala/scala/blob/v2.11.8/src/library/scala/Function22.scala">22個</a>，但程式能寫到這麼髒也真的不簡單；
+                            </p>
+                            <pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span
+                                    class="meta paragraph text"><span>scala&gt;&nbsp;val&nbsp;giveMeFive&nbsp;=&nbsp;new&nbsp;Function[Int,&nbsp;Boolean]&nbsp;{</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+                                    class="meta paragraph text"><span>def&nbsp;apply(n:&nbsp;Int)&nbsp;=&nbsp;{</span></span></span></div><div
+                                    class="line"><span
+                                    class="text plain"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+                                    class="meta paragraph text"><span>n&nbsp;==&nbsp;5</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+                                    class="meta paragraph text"><span>}</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;&nbsp;</span><span
+                                    class="meta paragraph text"><span>}</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>giveMeFive:&nbsp;Function[Int,Boolean]&nbsp;=&nbsp;&lt;function1&gt;</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;</span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>scala&gt;&nbsp;giveMeFive.apply(3)</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>res27:&nbsp;Boolean&nbsp;=&nbsp;false</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;</span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>scala&gt;&nbsp;giveMeFive.apply(5)</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>res28:&nbsp;Boolean&nbsp;=&nbsp;true</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;</span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>scala&gt;&nbsp;giveMeFive(3)</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>res29:&nbsp;Boolean&nbsp;=&nbsp;false</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;</span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>scala&gt;&nbsp;giveMeFive(5)</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>res30:&nbsp;Boolean&nbsp;=&nbsp;true</span></span></span></div></pre>
+                            <p><code>Function[Int,Boolean]</code> 等於<code>(n: Int) =&gt; n == 5</code>，</p>
+                            <p>Scala的<code>apply</code>語法蜜糖能幫助我們的function object用起來就像直接呼叫用<code>def</code>宣告的方法一樣，(<a
+                                    href="http://shinest.cc/post/6">這裡</a>可回顧apply用法)，</p>
+                            <p>在來示範2個參數的function object，</p>
+                            <pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span
+                                    class="meta paragraph text"><span>scala&gt;&nbsp;val&nbsp;isSame&nbsp;=&nbsp;new&nbsp;Function2[Int,&nbsp;Int,&nbsp;Boolean]&nbsp;{</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+                                    class="meta paragraph text"><span>def&nbsp;apply(x:&nbsp;Int,&nbsp;y:&nbsp;Int)&nbsp;=&nbsp;{</span></span></span></div><div
+                                    class="line"><span
+                                    class="text plain"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+                                    class="meta paragraph text"><span>x&nbsp;==&nbsp;y</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+                                    class="meta paragraph text"><span>}</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;&nbsp;</span><span
+                                    class="meta paragraph text"><span>}</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>isSame:&nbsp;(Int,&nbsp;Int)&nbsp;=&gt;&nbsp;Boolean&nbsp;=&nbsp;&lt;function2&gt;</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;</span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>scala&gt;&nbsp;isSame(2,&nbsp;3)</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>res31:&nbsp;Boolean&nbsp;=&nbsp;false</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;</span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>scala&gt;&nbsp;isSame.apply(5,&nbsp;5)</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>res32:&nbsp;Boolean&nbsp;=&nbsp;true</span></span></span></div></pre>
+                            <p><code>Function2[Int, Int, Boolean]</code>等於 <code>(x: Int, y: Int) =&gt; x == y</code>，
+                            </p>
+                            <p>匿名函數(anonymous function)寫法也是Scala提供的一種語法蜜糖。</p>
+                            <h2 id="partial-apply-function">partial apply function</h2>
+                            <p>先想像一下，有個<code>g</code> method需要傳入<code>x</code>與<code>y</code>，然後回傳個<code>z</code>，</p>
+                            <p>現在你負責的code只能確認<code>x</code>的值，<code>y</code>的值是由另一個programmer <code>愛加班員工</code> 負責提供，
+                            </p>
+                            <p>你弄好想下班了，所以你希望<code>g</code> method能先用你的<code>x</code>，然後回傳anonymous
+                                function給<code>愛加班員工</code>，</p>
+                            <p>該anonymous function己包含了你的<code>x</code>，所以你就可以不用加班了(完美)；</p>
+                            <p>這種將多型方法(polymorphic function)部份實做的事情，稱做partial apply function，</p>
+                            <p>我們來看看一個例子，</p>
+                            <p>假設<code>g</code> 是個計算平均的method， 取名為<code>average</code>，</p>
+                            <pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span
+                                    class="meta paragraph text"><span>def&nbsp;average(x:&nbsp;Int,&nbsp;y:&nbsp;Int):&nbsp;Double&nbsp;=&nbsp;(x&nbsp;+&nbsp;y)&nbsp;/&nbsp;2D</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>average:&nbsp;(x:&nbsp;Int,&nbsp;y:&nbsp;Int)Double</span></span></span></div></pre>
+                            <p>接下來我們希望只實做部份功能，也就是只傳入一個Int，我們可以這樣宣告，</p>
+                            <pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span
+                                    class="meta paragraph text"><span>def&nbsp;partial1[A,B,C](x:&nbsp;A,&nbsp;f:&nbsp;(A,B)&nbsp;=&gt;&nbsp;C):&nbsp;B&nbsp;=&gt;&nbsp;C</span></span></span></div></pre>
+                            <p><code>partial1</code> 是個High order function，傳入<code>x</code>跟<code>f</code>，回傳個anonymous
+                                function，該function要傳入B型態的值並回傳C型態的值，</p>
+                            <p>注意到<code>f</code>就是原始method
+                                <code>average</code>的邏輯，傳入2個Int回傳Double，可視為傳入<code>A</code>、<code>B</code> 回傳
+                                <code>C</code>，</p>
+                            <p>因為<code>partial1</code>的寫法是用polymorphic function，所以<code>f</code>傳入什麼都可以，只要是符合型態參數的method就好了，
+                            </p>
+                            <p>在來我們該怎麼實做<code>partial1</code>的method內容呢？</p>
+                            <p>因為<code>partial1</code>的回傳值是anonymous function，anonymous function的回傳值是<code>C</code>，</p>
+                            <p>所以我們可以將<code>a</code>丟到<code>f</code>裡，在用<code>=&gt;</code>的寫法回傳anonymous function就好了，
+                            </p>
+                            <pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span
+                                    class="meta paragraph text"><span>def&nbsp;partial1[A,B,C](a:&nbsp;A,&nbsp;f:&nbsp;(A,B)&nbsp;=&gt;&nbsp;C):&nbsp;B&nbsp;=&gt;&nbsp;C&nbsp;=&nbsp;{</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;&nbsp;</span><span
+                                    class="meta paragraph text"><span>(b:&nbsp;B)&nbsp;=&gt;&nbsp;f(a,b)</span></span></span></div><div
+                                    class="line"><span class="text plain"><span
+                                    class="meta paragraph text"><span>}</span></span></span></div></pre>
+                            <p>這樣我們就完成<code>average</code>的部份實做了，只傳入一個<code>Int</code>即可，</p>
+                            <pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span
+                                    class="meta paragraph text"><span>cala&gt;&nbsp;val&nbsp;partOfAverage&nbsp;=&nbsp;partial1(3,&nbsp;average)</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>part1:&nbsp;Int&nbsp;=&gt;&nbsp;Double&nbsp;=&nbsp;&lt;function1&gt;</span></span></span></div></pre>
+                            <p>接下來我們可以隨時決定第2個Int為何，</p>
+                            <pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span
+                                    class="meta paragraph text"><span>scala&gt;&nbsp;partOfAverage(4)</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>res5:&nbsp;Double&nbsp;=&nbsp;3.5</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;</span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>scala&gt;&nbsp;partOfAverage(3)</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>res6:&nbsp;Double&nbsp;=&nbsp;3.0</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;</span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>scala&gt;&nbsp;partOfAverage(100)</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>res9:&nbsp;Double&nbsp;=&nbsp;51.5</span></span></span></div></pre>
+                            <p>把<code>partOfAverage</code>丟給<code>愛加班員工</code>去加班，我們就收包包下班吧！</p>
+                            <h4 id="-a-name-methodtofunction-method-to-function-object-a-"><a name="methodToFunction">method
+                                to function object </a></h4>
+                            <p>Scala提供2寫法能讓我們很方便的將method轉成partial apply function，</p>
+                            <p>第一種是要將method的argument改成多個argument groups，用法差不多，</p>
+                            <pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span
+                                    class="meta paragraph text"><span>def&nbsp;average2(x:&nbsp;Int)(y:&nbsp;Int)&nbsp;=&nbsp;(x&nbsp;+&nbsp;y)&nbsp;/&nbsp;2D</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>average2:&nbsp;(x:&nbsp;Int)(y:&nbsp;Int)Double</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;</span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>scala&gt;&nbsp;average2(3)(5)</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>res22:&nbsp;Double&nbsp;=&nbsp;4.0</span></span></span></div></pre>
+                            <p>如此一來我們就能利用<code>_</code>下劃線去實現partial apply function，</p>
+                            <pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span
+                                    class="meta paragraph text"><span>scala&gt;&nbsp;val&nbsp;partOfAverage2&nbsp;=&nbsp;average2(3)&nbsp;_</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>partOfAverage:&nbsp;Int&nbsp;=&gt;&nbsp;Double&nbsp;=&nbsp;&lt;function1&gt;</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;</span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>scala&gt;&nbsp;partOfAverage2(5)</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>res18:&nbsp;Double&nbsp;=&nbsp;4.0</span></span></span></div></pre>
+                            <p><code>_</code>下劃線是幫助我們將method轉成function object，我們也可以把<code>average</code>轉成吃2個參數的function
+                                object。</p>
+                            <pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span
+                                    class="meta paragraph text"><span>scala&gt;&nbsp;average&nbsp;_</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>res20:&nbsp;(Int,&nbsp;Int)&nbsp;=&gt;&nbsp;Double&nbsp;=&nbsp;&lt;function2&gt;</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;</span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>scala&gt;&nbsp;res20(3,5)</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>res23:&nbsp;Double&nbsp;=&nbsp;4.0</span></span></span></div></pre>
+                            <p>第2種是在call method時，將不確定的參數用<code>_</code> 佔位字元代替，</p>
+                            <pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span
+                                    class="meta paragraph text"><span>scala&gt;&nbsp;average(3,&nbsp;_:&nbsp;Int)</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>res30:&nbsp;Int&nbsp;=&gt;&nbsp;Double&nbsp;=&nbsp;&lt;function1&gt;</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;</span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>scala&gt;&nbsp;res30(5)</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>res31:&nbsp;Double&nbsp;=&nbsp;4.0</span></span></span></div></pre>
+                            <p>無論如何partial apply function最後都是用function object來做，</p>
+                            <p>就像<code>partial1</code>所以回傳的那樣。</p>
+                            <h4 id="curry-and-uncurry">curry and uncurry</h4>
+                            <h6 id="curry">Curry</h6>
+                            <p>所謂鞣製（Curry)，是指將接受多個參數的函式，改為接受單一參數的函式(<a
+                                    href="http://openhome.cc/Gossip/Scala/Curry.html">參考良葛格的解釋</a>)，</p>
+                            <p>method的宣告與實做就像下面那樣，</p>
+                            <pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span
+                                    class="meta paragraph text"><span>def&nbsp;curry[A,B,C](f:&nbsp;(A,&nbsp;B)&nbsp;=&gt;&nbsp;C):&nbsp;A&nbsp;=&gt;&nbsp;(B&nbsp;=&gt;&nbsp;C)&nbsp;=&nbsp;{</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;&nbsp;</span><span
+                                    class="meta paragraph text"><span>a:&nbsp;A&nbsp;=&gt;&nbsp;b:&nbsp;B&nbsp;=&gt;&nbsp;f(a,&nbsp;b)</span></span></span></div><div
+                                    class="line"><span class="text plain"><span
+                                    class="meta paragraph text"><span>}</span></span></span></div></pre>
+                            <p>function <code>f</code> 經過stephen curry
+                                <del>蹂躪</del>
+                                鞣製後，會成為A =&gt; (B =&gt; C)的function object，
+                            </p>
+                            <p>將<code>average</code>丟進去看看，</p>
+                            <pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span
+                                    class="meta paragraph text"><span>scala&gt;&nbsp;val&nbsp;curryOfAverage&nbsp;=&nbsp;curry(average)</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>curryOfAverage:&nbsp;Int&nbsp;=&gt;&nbsp;(Int&nbsp;=&gt;&nbsp;Double)&nbsp;=&nbsp;&lt;function1&gt;</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;</span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>scala&gt;&nbsp;curryOfAverage(3)(4)</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>res33:&nbsp;Double&nbsp;=&nbsp;3.5</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;</span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>scala&gt;&nbsp;curryOfAverage(3)</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>res34:&nbsp;Int&nbsp;=&gt;&nbsp;Double&nbsp;=&nbsp;&lt;function1&gt;</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;</span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>scala&gt;&nbsp;res34(4)</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>res35:&nbsp;Double&nbsp;=&nbsp;3.5</span></span></span></div></pre>
+                            <p>我們可以一樣將2個Int丟給<code>curryOfAverage</code>，或者丟1個Int也行，</p>
+                            <p>curry 跟 partial apply function 看起來很類似，但還是有不同的地方，</p>
+                            <p>若使用<a
+                                    href="http://shinest.cc/post/scala/higher_order_function_p2.md.html#methodToFunction">method
+                                to function object</a>的第一種方式將method轉成function object，也可說是經過curry，</p>
+                            <p>但如果是第2種轉成partial apply function，我們也可以將第一個參數用<code>_</code>取代，也就是說<code>_</code>可以放到任一個位置。
+                            </p>
+                            <pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span
+                                    class="meta paragraph text"><span>scala&gt;&nbsp;average(_:&nbsp;Int,&nbsp;5)</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>res36:&nbsp;Int&nbsp;=&gt;&nbsp;Double&nbsp;=&nbsp;&lt;function1&gt;</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;</span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>scala&gt;&nbsp;res36(3)</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>res37:&nbsp;Double&nbsp;=&nbsp;4.0</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;</span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>scala&gt;&nbsp;average(_:&nbsp;Int,&nbsp;_:Int)</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>res38:&nbsp;(Int,&nbsp;Int)&nbsp;=&gt;&nbsp;Double&nbsp;=&nbsp;&lt;function2&gt;</span></span></span></div></pre>
+                            <h6 id="uncurry">Uncurry</h6>
+                            <p>這不用解釋了吧！？ 把curry化的function弄回未curry狀態。</p>
+                            <pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span
+                                    class="meta paragraph text"><span>def&nbsp;uncurry[A,B,C](f:&nbsp;A&nbsp;=&gt;&nbsp;B&nbsp;=&gt;&nbsp;C):&nbsp;(A,&nbsp;B)&nbsp;=&gt;&nbsp;C&nbsp;=&nbsp;{</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;&nbsp;</span><span
+                                    class="meta paragraph text"><span>(a:&nbsp;A,&nbsp;b:&nbsp;B)&nbsp;=&gt;&nbsp;f(a)(b)</span></span></span></div><div
+                                    class="line"><span class="text plain"><span
+                                    class="meta paragraph text"><span>}</span></span></span></div></pre>
+                            <h4 id="function-compose-andthen">function compose、andthen</h4>
+                            <p>在數學上來說，若我們有2個算式，$f&thinsp;: X → Y$ 、$g&thinsp;: Y → Z$</p>
+                            <p><code>g</code>的input可藉由<code>f</code>的output而來，</p>
+                            <p>這時我們可以把<code>f</code> <code>g</code>給組合在一起產生一個新的function $X → Z$，</p>
+                            <p>稱做複合函數(g of f)，數學表示式為$g&thinsp;∘&thinsp;f : X → Z = g(f(x))$，</p>
+                            <p>寫成Scala的HOF如下，</p>
+                            <pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span
+                                    class="meta paragraph text"><span>def&nbsp;compose[A,&nbsp;B,&nbsp;C](g:&nbsp;B&nbsp;=&gt;&nbsp;C,&nbsp;f:&nbsp;A&nbsp;=&gt;&nbsp;B):&nbsp;A&nbsp;=&gt;&nbsp;C&nbsp;=&nbsp;{</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;&nbsp;</span><span
+                                    class="meta paragraph text"><span>a:&nbsp;A&nbsp;=&gt;&nbsp;g(f(a))</span></span></span></div><div
+                                    class="line"><span class="text plain"><span
+                                    class="meta paragraph text"><span>}</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;</span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>def&nbsp;andThem[A,&nbsp;B,&nbsp;C](f:&nbsp;A&nbsp;=&gt;&nbsp;B,&nbsp;g:&nbsp;B&nbsp;=&gt;&nbsp;C):&nbsp;A&nbsp;=&gt;&nbsp;C&nbsp;=&nbsp;{</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;&nbsp;</span><span
+                                    class="meta paragraph text"><span>a&nbsp;=&gt;&nbsp;g(f(a))</span></span></span></div><div
+                                    class="line"><span class="text plain"><span
+                                    class="meta paragraph text"><span>}</span></span></span></div></pre>
+                            <p>function object所實做的Function trait就提供了我們好用的method <code>compose</code>
+                                <code>andThen</code>來弄成複合函數。</p>
+                            <pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span
+                                    class="meta paragraph text"><span>scala&gt;&nbsp;val&nbsp;f&nbsp;=&nbsp;(x:&nbsp;Int)&nbsp;=&gt;&nbsp;x&nbsp;*&nbsp;x</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>f:&nbsp;Int&nbsp;=&gt;&nbsp;Int&nbsp;=&nbsp;&lt;function1&gt;</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;</span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>scala&gt;&nbsp;val&nbsp;g&nbsp;=&nbsp;(y:&nbsp;Int)&nbsp;=&gt;&nbsp;y&nbsp;*&nbsp;2&nbsp;+&nbsp;1</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>g:&nbsp;Int&nbsp;=&gt;&nbsp;Int&nbsp;=&nbsp;&lt;function1&gt;</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;</span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>scala&gt;&nbsp;g(f(2))</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>res6:&nbsp;Int&nbsp;=&nbsp;9</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;</span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>scala&gt;&nbsp;val&nbsp;fOfG&nbsp;=&nbsp;f&nbsp;andThen&nbsp;g</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>fOfG:&nbsp;Int&nbsp;=&gt;&nbsp;Int&nbsp;=&nbsp;&lt;function1&gt;</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;</span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>scala&gt;&nbsp;fOfG(2)</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>res4:&nbsp;Int&nbsp;=&nbsp;9</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;</span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;</span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>scala&gt;&nbsp;val&nbsp;gOfF&nbsp;=&nbsp;f&nbsp;compose&nbsp;g</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>gOfF:&nbsp;Int&nbsp;=&gt;&nbsp;Int&nbsp;=&nbsp;&lt;function1&gt;</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;</span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>scala&gt;&nbsp;gOfF(2)</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>res7:&nbsp;Int&nbsp;=&nbsp;25</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;</span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>scala&gt;&nbsp;f(g(2))</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>res9:&nbsp;Int&nbsp;=&nbsp;25</span></span></span></div></pre>
+                            <h2 id="-method-vs-function-">方法(method) vs 函數(function)</h2>
+                            <p>以Scala來說，這2個是不一樣的，</p>
+                            <p>方法(method)就像是Java類別中的方法，有方法相關宣告、annotation等等，</p>
+                            <p>函數(function)是一個完整的object，就像上個部份所說，每個匿名函數(anonymous function) 都會生成 function object，</p>
+                            <p>我們可以試著把下面程式儲存起來並取名為<code>FunctionSample.scala</code>，</p>
+                            <pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span
+                                    class="meta paragraph text"><span>class&nbsp;FunctionSample&nbsp;{</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;&nbsp;</span><span
+                                    class="meta paragraph text"><span>def&nbsp;m1(x:&nbsp;Int)&nbsp;=&nbsp;x&nbsp;+&nbsp;3</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;</span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;&nbsp;</span><span
+                                    class="meta paragraph text"><span>val&nbsp;f1&nbsp;=&nbsp;(x:&nbsp;Int)&nbsp;=&gt;&nbsp;x&nbsp;+&nbsp;3</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;</span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;&nbsp;</span><span
+                                    class="meta paragraph text"><span>val&nbsp;f2&nbsp;=&nbsp;m1&nbsp;_</span></span></span></div><div
+                                    class="line"><span class="text plain"><span
+                                    class="meta paragraph text"><span>}</span></span></span></div></pre>
+                            <p>接下來用<code>scalac</code> 編譯後，可以發現資料夾下多了2個anonymous class，</p>
+                            <p><img alt="anonymous class"
+                                    src="https://s3-ap-northeast-1.amazonaws.com/shine-st-blog/img/scala_10_1.png"></p>
+                            <p>f2 是將m1用 <code>_</code>下劃線產生新的function object，即使m1 跟 f1的程式一模一樣，</p>
+                            <p>用<code>javap</code> 觀察 <code>FunctionSample\$\$anonfun\$1</code> <code>FunctionSample\$\$anonfun\$2</code>
+                                會發現他們是2個class，但class是一樣的。</p>
+                            <pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span
+                                    class="meta paragraph text"><span>javap&nbsp;FunctionSample\$\$anonfun\$1</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;</span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>Compiled&nbsp;from&nbsp;"FunctionSample.scala"</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>public&nbsp;final&nbsp;class&nbsp;FunctionSample$$anonfun$1&nbsp;extends&nbsp;scala.runtime.AbstractFunction1$mcII$sp&nbsp;implements&nbsp;scala.Serializable&nbsp;{</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;&nbsp;</span><span
+                                    class="meta paragraph text"><span>public&nbsp;static&nbsp;final&nbsp;long&nbsp;serialVersionUID;</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>&nbsp;&nbsp;public&nbsp;final&nbsp;int&nbsp;apply(int);</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>&nbsp;&nbsp;public&nbsp;int&nbsp;apply$mcII$sp(int);</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>&nbsp;&nbsp;public&nbsp;final&nbsp;java.lang.Object&nbsp;apply(java.lang.Object);</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>&nbsp;&nbsp;public&nbsp;FunctionSample$$anonfun$1(FunctionSample);</span></span></span></div><div
+                                    class="line"><span class="text plain"><span
+                                    class="meta paragraph text"><span>}</span></span></span></div></pre>
+                            <pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span
+                                    class="meta paragraph text"><span>javap&nbsp;FunctionSample\$\$anonfun\$2</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;</span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>Compiled&nbsp;from&nbsp;"FunctionSample.scala"</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>public&nbsp;final&nbsp;class&nbsp;FunctionSample$$anonfun$2&nbsp;extends&nbsp;scala.runtime.AbstractFunction1$mcII$sp&nbsp;implements&nbsp;scala.Serializable&nbsp;{</span></span></span></div><div
+                                    class="line"><span class="text plain"><span>&nbsp;&nbsp;</span><span
+                                    class="meta paragraph text"><span>public&nbsp;static&nbsp;final&nbsp;long&nbsp;serialVersionUID;</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>&nbsp;&nbsp;public&nbsp;final&nbsp;int&nbsp;apply(int);</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>&nbsp;&nbsp;public&nbsp;int&nbsp;apply$mcII$sp(int);</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>&nbsp;&nbsp;public&nbsp;final&nbsp;java.lang.Object&nbsp;apply(java.lang.Object);</span></span></span></div><div
+                                    class="line"><span class="text plain"><span class="meta paragraph text"><span>&nbsp;&nbsp;public&nbsp;FunctionSample$$anonfun$2(FunctionSample);</span></span></span></div><div
+                                    class="line"><span class="text plain"><span
+                                    class="meta paragraph text"><span>}</span></span></span></div></pre>
+                            <hr>
+
+                        </div>
+                    </div>
+
+                    <div class="post tail">
+                        <hr>
+
+                        <div class="ui grid">
+                            <div class="row">
+                                <div class="six wide column"></div>
+                                <div class="five wide column">
+
+                                </div>
+                                <div class="five wide column">
+                                    <div class="ui label">
+                                        create at 2016-03-29 01:30:57
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="column">
+                                    <div class="comment">
+                                        <div id="disqus_thread">
+                                            <iframe width="100%" frameborder="0" id="dsq-app2" name="dsq-app2"
+                                                    allowtransparency="true" scrolling="no" tabindex="0" title="Disqus"
+                                                    style="width: 1px ! important; min-width: 100% ! important; border: medium none ! important; overflow: hidden ! important; height: 335px ! important;"
+                                                    src="http://disqus.com/embed/comments/?base=default&amp;version=cfcd5ec7691bd02a4c93982460b4bdd3&amp;f=shinest&amp;t_u=http%3A%2F%2Fshinest.cc%2Fpost%2Fscala%2Fhigher_order_function_p2.md.html&amp;t_d=shinest.cc%20%7C%20Scala%20Tutorials%20%7C%20Scala-High-order%20Function%20-%20P2&amp;t_t=shinest.cc%20%7C%20Scala%20Tutorials%20%7C%20Scala-High-order%20Function%20-%20P2&amp;s_o=default"
+                                                    horizontalscrolling="no" verticalscrolling="no"></iframe>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="two wide column"></div>
+
+    </div>
+</div>
+
+</body>
+</html>

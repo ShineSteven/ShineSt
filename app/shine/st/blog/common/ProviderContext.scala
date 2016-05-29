@@ -1,8 +1,6 @@
-package model
+package shine.st.blog.common
 
 import play.api.mvc.Request
-import java.util.Date
-import common.DateUtils
 
 trait ProviderContext {
   implicit def customizeContext[A](implicit request: Request[A]): CustomizeContext = {

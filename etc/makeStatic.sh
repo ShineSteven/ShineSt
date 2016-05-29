@@ -15,4 +15,5 @@ curl -o $BASE_PATH/post/scala/functional_programming.md.html http://localhost:80
 curl -o $BASE_PATH/post/scala/higher_order_function_p1.md.html http://localhost:80/postDetail/10
 curl -o $BASE_PATH/post/scala/higher_order_function_p2.md.html http://localhost:80/postDetail/11
 
+curl -o $BASE_PATH/post/scala/index.html http://localhost:80/categories/scala
 

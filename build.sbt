@@ -1,21 +1,9 @@
 import Dependency._
 
 name := """ShineSt"""
-version := "1.0.1.RELEASE"
+version := "1.0.2.RELEASE"
 
-libraryDependencies ++= Seq(
-  jdbc,
-//  cache,
-//  ws,
-  specs2 % Test
-)
 
-libraryDependencies ++= Seq(
-  mysql,
-  aws,
-  joda,
-  lang3
-)
 
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
 

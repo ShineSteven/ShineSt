@@ -1,0 +1,65 @@
+@import shine.st.blog.model.vo.PostVO
+@import shine.st.blog.model.vo.CategoriesVO
+@import shine.st.blog.common.CustomizeContext
+@import shine.st.blog.common.DateTimeUtils
+@(allCategoriesPost: (CategoriesVO, List[PostVO]))(implicit customizeContext: CustomizeContext)
+
+
+@front("") {
+<div id="categories_display">
+    <h1 class="ui teal header">
+        @(allCategoriesPost._1.name)
+    </h1>
+    <div class="ui left pointing label">
+        @(allCategoriesPost._1.description)
+    </div>
+
+</div>
+
+
+@for(post <- allCategoriesPost._2) {
+<div class="post">
+    <div class="post title">
+        <a class="ui huge teal header" href="/post/scala/@(post.staticPageName)">@(post.title)</a>
+    </div>
+
+    <div class="markdown-preview">
+        <div class="post content">
+            @Html(post.content)
+        </div>
+    </div>
+
+    <div class="post tail">
+        <hr>
+
+        <div class="ui grid">
+            <div class="six wide column"></div>
+            <div class="five wide column">
+                @if(post.updateAt.isDefined) {
+                <div class="ui label">
+                    update at @(DateTimeUtils.formatOptionDateTime(post.updateAt).getOrElse(""))
+                </div>
+                }
+            </div>
+            <div class="five wide column">
+                <div class="ui label">
+                    create at @(DateTimeUtils.formatDateTime(post.createAt).getOrElse(""))
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+}
+
+}
+
+
+
+
+
+

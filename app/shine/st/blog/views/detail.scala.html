@@ -1,14 +1,14 @@
-@import model.Post
-@import model.CustomizeContext
-@import common.DateUtils
-@(post: Post)(implicit customizeContext: CustomizeContext)
+@import shine.st.blog.model.vo.PostVO
+@import shine.st.blog.common.CustomizeContext
+@import shine.st.blog.common.DateTimeUtils
+@(post: PostVO)(implicit customizeContext: CustomizeContext)
 
 
 @front(s"${post.title}") {
 
 <div class="post">
     <div class="post title">
-        <a class="ui huge teal header" href="/post/scala/@(post.contentFile)">@(post.title)</a>
+        <a class="ui huge teal header" href="/post/scala/@(post.content)">@(post.title)</a>
     </div>
 
     <div class="markdown-preview">
@@ -26,13 +26,13 @@
                 <div class="five wide column">
                     @if(post.updateAt.isDefined) {
                     <div class="ui label">
-                        update at @(DateUtils.formatOptionDateTime(post.updateAt).getOrElse(""))
+                        update at @(DateTimeUtils.formatOptionDateTime(post.updateAt).getOrElse(""))
                     </div>
                     }
                 </div>
                 <div class="five wide column">
                     <div class="ui label">
-                        create at @(DateUtils.formatOptionDateTime(post.createAt).getOrElse(""))
+                        create at @(DateTimeUtils.formatDateTime(post.createAt).getOrElse(""))
                     </div>
                 </div>
             </div>
