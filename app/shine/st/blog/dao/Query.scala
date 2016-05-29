@@ -2,13 +2,12 @@ package shine.st.blog.dao
 
 import java.sql.{Connection, PreparedStatement, ResultSet}
 
-import shine.st.blog.common.{DBUtils, DevConnectionPool}
+import shine.st.blog.common.{ConnectionPool, DBUtils}
 
 
 trait Query {
   implicit def connect = {
-    println("trait get connection")
-    DevConnectionPool.getConnection()
+    ConnectionPool.getConnection()
   }
 
   def query[A](sql: String)(p: PreparedStatement => PreparedStatement)(r: ResultSet => A)(implicit c: Connection): A = {

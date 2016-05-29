@@ -7,11 +7,12 @@ import play.api.Configuration
 
 
 /**
- * Created by shinesteven on 2015/8/13.
- */
+  * Created by shinesteven on 2015/8/13.
+  */
 object DBUtils {
   Class.forName("com.mysql.jdbc.Driver")
-  val config:Configuration = Common.config
+  val config: Configuration = Common.config
+
   def connect = DriverManager.getConnection(s"jdbc:mysql://${config.getString("DB.ip").get}/${config.getString("DB.database").get}?user=${config.getString("DB.account").get}&password=${config.getString("DB.pw").get}")
 
   def close(closeable: => AutoCloseable) {
@@ -21,12 +22,12 @@ object DBUtils {
 
 }
 
-object DevConnectionPool extends ConnectionPool {
+object ConnectionPool extends BaseConnectionPool {
   init(Common.config.getConfig("DB").get)
 }
 
 
-abstract class ConnectionPool {
+abstract class BaseConnectionPool {
   private val pool: ComboPooledDataSource = new ComboPooledDataSource()
 
   def init(config: Configuration) = {

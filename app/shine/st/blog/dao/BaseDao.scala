@@ -1,13 +1,14 @@
 package shine.st.blog.dao
 
-import java.sql.ResultSet
+import java.sql.{PreparedStatement, ResultSet}
 
 /**
   * Created by stevenfanchiang on 2016/5/19.
   */
-trait BaseDao[A] extends Query{
-  val singleSql :String
+trait BaseDao[A] extends Query {
+  val singleSql: String
   val allSql: String
+
   def generate(rs: ResultSet): A
 
   def queryById(id: Int): Option[A] = {
@@ -24,7 +25,12 @@ trait BaseDao[A] extends Query{
   }
 
   def all(): List[A] = {
-    query(allSql)(p => p) { rs =>
+    list(allSql)(p => p)
+  }
+
+
+  def list(sql: String)(p: PreparedStatement => PreparedStatement): List[A] = {
+    query(sql)(p) { rs =>
       val result = scala.collection.mutable.ArrayBuffer.empty[A]
       while (rs.next()) {
         result += generate(rs)
