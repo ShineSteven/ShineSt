@@ -23,20 +23,27 @@ object PostService {
     }
   }
 
-  def allPostByCategory(categoryName: String) = {
+  def allPostByCategoriesName(categoryName: String) = {
     val category = CategoriesDao.queryByName(categoryName)
 
-    category.flatMap { c => CategoriesService.findSecondHierarchyByName(c.id) }.flatMap { list =>
-      val postList = list.flatMap(c => PostDao.queryByCategoryId(c.id)).map {
-        transfer(_)
-      }.sortWith(_.createAt.getMillis > _.createAt.getMillis)
-      Option(CategoriesVO(category.get.id, category.get.name, category.get.description, postList.size) -> postList)
+    category.map { c => CategoriesDao.queryByParentId(c.id) } match {
+      case Some(categoriesList) if !categoriesList.isEmpty =>
+        val postList = categoriesList.flatMap { c => PostDao.queryByCategoryId(c.id) }.map(transfer).sortWith {
+          _.createAt.getMillis > _.createAt.getMillis
+        }
+        Option(CategoriesVO(category.get.id, category.get.name, category.get.description, postList.size) -> postList)
+
+      case None => None
     }
+
+
   }
 
   private def transfer(post: PostModel) = {
     val content = IOUtils.inputStreamToString(S3.getBucketObject(post.contentFile).getObjectContent)
     val category = CategoriesDao.queryById(post.categoryId).get
+
     PostVO(post.id, post.title, content, post.contentFile, post.createAt, post.updateAt, category)
+
   }
 }

@@ -1,6 +1,6 @@
 
   $( document ).ready(function() {
-  var r = jsRoutes.shine.st.blog.controllers.Categories.count();
+  var r = jsRoutes.shine.st.blog.controllers.CategoriesCtrl.count();
 
  $.ajax({
       url: r.url,

@@ -7,7 +7,7 @@ import shine.st.blog.services.PostService
 /**
   * Created by shinesteven on 2015/7/28.
   */
-class Index extends Controller with ProviderContext {
+class IndexCtrl extends Controller with ProviderContext {
   def index = Action { implicit reqeust =>
     val allPost = PostService.all
     Ok(shine.st.blog.views.html.index(allPost))

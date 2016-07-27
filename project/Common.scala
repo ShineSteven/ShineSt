@@ -6,7 +6,7 @@ import play.sbt.PlayScala
 
 object Dependency {
   val mysql = "mysql" % "mysql-connector-java" % "5.1.37"
-  val joda = "joda-time" % "joda-time" % "2.9"
+  val joda = "joda-time" % "joda-time" % "2.9.4"
   val lang3 = "org.apache.commons" % "commons-lang3" % "3.4"
   val aws = "com.amazonaws" % "aws-java-sdk" % "1.10.27" exclude("commons-logging", "commons-logging")
   //  val jsoup = "org.jsoup" % "jsoup" % "1.8.3"
@@ -31,11 +31,6 @@ object ShineStBuild extends Build {
   )
 
 
-  lazy val batchDependency = Seq(
-    Dependency.joda,
-    Dependency.httpClient
-  )
-
   lazy val rootDependency = Seq(
     jdbc,
     specs2 % Test,
@@ -47,13 +42,7 @@ object ShineStBuild extends Build {
   )
 
 
-  //  lazy val batch = (project in file("batch-task")).settings(commonSettings: _*).dependsOn(shine.st.blog.common)
-  lazy val batch = (project in file("batch")).settings(commonSettings: _*).settings(
-    libraryDependencies ++= batchDependency
-  )
-
-  //  lazy val root = (project in file(".")).enablePlugins(PlayScala).aggregate(shine.st.blog.common, batch, akka_compute).settings(commonSettings: _*).dependsOn(shine.st.blog.common).dependsOn(akka_compute)
-  lazy val root = (project in file(".")).enablePlugins(PlayScala).aggregate(batch).settings(commonSettings: _*).settings(libraryDependencies ++= rootDependency)
+  lazy val root = (project in file(".")).enablePlugins(PlayScala).settings(commonSettings: _*).settings(libraryDependencies ++= rootDependency)
 
 
 }

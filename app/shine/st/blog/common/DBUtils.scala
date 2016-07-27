@@ -35,7 +35,7 @@ abstract class BaseConnectionPool {
     pool.setJdbcUrl(config.getString("url").get)
     pool.setUser(config.getString("user").get)
     pool.setPassword(config.getString("password").get)
-    pool.setMaxPoolSize(15)
+    pool.setMaxPoolSize(20)
   }
 
   def getConnection() = pool.getConnection
