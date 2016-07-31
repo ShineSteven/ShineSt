@@ -4,6 +4,7 @@ import java.sql.DriverManager
 
 import com.mchange.v2.c3p0.ComboPooledDataSource
 import play.api.Configuration
+import shine.st.blog._
 
 
 /**
@@ -11,7 +12,6 @@ import play.api.Configuration
   */
 object DBUtils {
   Class.forName("com.mysql.jdbc.Driver")
-  val config: Configuration = Common.config
 
   def connect = DriverManager.getConnection(s"jdbc:mysql://${config.getString("DB.ip").get}/${config.getString("DB.database").get}?user=${config.getString("DB.account").get}&password=${config.getString("DB.pw").get}")
 
@@ -23,7 +23,7 @@ object DBUtils {
 }
 
 object ConnectionPool extends BaseConnectionPool {
-  init(Common.config.getConfig("DB").get)
+  init(config.getConfig("DB").get)
 }
 
 

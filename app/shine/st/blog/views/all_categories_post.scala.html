@@ -1,7 +1,7 @@
 @import shine.st.blog.model.vo.PostVO
 @import shine.st.blog.model.vo.CategoriesVO
 @import shine.st.blog.common.CustomizeContext
-@import shine.st.blog.common.DateTimeUtils
+@import shine.st.common.DateTimeUtils
 @(allCategoriesPost: (CategoriesVO, List[PostVO]))(implicit customizeContext: CustomizeContext)
 
 
@@ -37,13 +37,13 @@
             <div class="five wide column">
                 @if(post.updateAt.isDefined) {
                 <div class="ui label">
-                    update at @(DateTimeUtils.formatOptionDateTime(post.updateAt).getOrElse(""))
+                    update at @(DateTimeUtils.formatDateHour(post.updateAt))
                 </div>
                 }
             </div>
             <div class="five wide column">
                 <div class="ui label">
-                    create at @(DateTimeUtils.formatDateTime(post.createAt).getOrElse(""))
+                    create at @(DateTimeUtils.formatDateHour(post.createAt))
                 </div>
             </div>
 

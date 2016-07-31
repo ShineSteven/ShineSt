@@ -8,6 +8,12 @@
         </encoder>
     </appender>
 
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d %-5level [%thread] %logger{36}-%line : %msg%n</pattern>
+        </encoder>
+    </appender>
+
     <appender name="blog" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>/tmp/logs/blog.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -34,5 +40,6 @@
     <logger name="shine.st.blog" level="debug">
         <appender-ref ref="blog"/>
     </logger>
+
 
 </configuration>

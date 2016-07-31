@@ -1,6 +1,7 @@
 package shine.st.blog.services
 
-import shine.st.blog.common.{IOUtils, S3}
+import shine.st.common.{IOUtils}
+import shine.st.blog.common.S3
 import shine.st.blog.dao.{CategoriesDao, PostDao}
 import shine.st.blog.model.PostModel
 import shine.st.blog.model.vo.{CategoriesVO, PostVO}

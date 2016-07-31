@@ -1,7 +1,7 @@
 package shine.st.blog.controllers
 
 import play.api.mvc.{Action, Controller}
-import shine.st.blog.common.ProviderContext
+import shine.st.blog.common.{Dump, ProviderContext}
 import shine.st.blog.services.{CategoriesService, PostService}
 
 /**
@@ -17,7 +17,7 @@ class CategoriesCtrl extends Controller with ProviderContext {
   def allCategoriesPost(categoryName: String) = Action { implicit request =>
     val post = PostService.allPostByCategoriesName(categoryName)
     post match {
-      case Some(content)  => Ok(shine.st.blog.views.html.all_categories_post(post))
+      case Some(content)  => Ok(shine.st.blog.views.html.all_categories_post(content))
       case None => Ok(shine.st.blog.views.html.oops("no categories post, see log to know exception"))
     }
 
