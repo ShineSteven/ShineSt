@@ -27,10 +27,4 @@ object CategoriesService {
     }
   }
 
-  def findSecondHierarchyByName(id: Int) = {
-    CategoriesDao.queryById(id).flatMap { c =>
-      Option(CategoriesDao.queryByParentId(c.id))
-    }
-  }
-
 }

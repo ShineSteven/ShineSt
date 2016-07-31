@@ -6,13 +6,13 @@ import play.sbt.PlayScala
 
 object Dependency {
   val mysql = "mysql" % "mysql-connector-java" % "5.1.37"
-  val joda = "joda-time" % "joda-time" % "2.9"
+  val joda = "joda-time" % "joda-time" % "2.9.4"
   val lang3 = "org.apache.commons" % "commons-lang3" % "3.4"
   val aws = "com.amazonaws" % "aws-java-sdk" % "1.10.27" exclude("commons-logging", "commons-logging")
-  //  val jsoup = "org.jsoup" % "jsoup" % "1.8.3"
   val httpClient = "org.apache.httpcomponents" % "httpclient" % "4.5.2"
   val config = "com.typesafe" % "config" % "1.2.1"
   val c3p0 = "com.mchange" % "c3p0" % "0.9.5.1"
+  val shinestCommon = "shine.st" %% "shinest_common" % "1.0.1.SNAPSHOT"
 }
 
 /**
@@ -31,29 +31,24 @@ object ShineStBuild extends Build {
   )
 
 
-  lazy val batchDependency = Seq(
-    Dependency.joda,
-    Dependency.httpClient
-  )
-
-  lazy val rootDependency = Seq(
+  lazy val rootThirdPartyDependency = Seq(
     jdbc,
     specs2 % Test,
     mysql,
     aws,
     joda,
     lang3,
-    c3p0
+    c3p0,
+    shinestCommon
+  )
+
+  lazy val commonDependency = Seq("org.scala-lang" % "scala-reflect" % "2.11.8",
+    "org.scala-lang.modules" % "scala-xml_2.11" % "1.0.4",
+    "org.scalatest" %% "scalatest" % "2.2.4" % "test"
   )
 
 
-  //  lazy val batch = (project in file("batch-task")).settings(commonSettings: _*).dependsOn(shine.st.blog.common)
-  lazy val batch = (project in file("batch")).settings(commonSettings: _*).settings(
-    libraryDependencies ++= batchDependency
-  )
-
-  //  lazy val root = (project in file(".")).enablePlugins(PlayScala).aggregate(shine.st.blog.common, batch, akka_compute).settings(commonSettings: _*).dependsOn(shine.st.blog.common).dependsOn(akka_compute)
-  lazy val root = (project in file(".")).enablePlugins(PlayScala).aggregate(batch).settings(commonSettings: _*).settings(libraryDependencies ++= rootDependency)
+  lazy val root = (project in file(".")).enablePlugins(PlayScala).settings(commonSettings: _*).settings(libraryDependencies ++= (commonDependency ++ rootThirdPartyDependency))
 
 
 }
