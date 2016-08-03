@@ -7,4 +7,7 @@ import play.api.Play._
   */
 package object blog {
   val config = current.configuration
+  val blogBucketName = config.getString("blog.bucket.name").get
+
+
 }

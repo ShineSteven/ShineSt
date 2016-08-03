@@ -1,11 +1,11 @@
 package shine.st.blog.services
 
 import shine.st.common.{IOUtils}
-import shine.st.blog.common.S3
+import shine.st.common.aws.S3
 import shine.st.blog.dao.{CategoriesDao, PostDao}
 import shine.st.blog.model.PostModel
 import shine.st.blog.model.vo.{CategoriesVO, PostVO}
-
+import shine.st.blog._
 /**
   * Created by shinest on 2016/5/17.
   */
@@ -41,7 +41,7 @@ object PostService {
   }
 
   private def transfer(post: PostModel) = {
-    val content = IOUtils.inputStreamToString(S3.getBucketObject(post.contentFile).getObjectContent)
+    val content = IOUtils.inputStreamToString(S3.getObjectContent(blogBucketName,post.contentFile))
     val category = CategoriesDao.queryById(post.categoryId).get
 
     PostVO(post.id, post.title, content, post.contentFile, post.createAt, post.updateAt, category)

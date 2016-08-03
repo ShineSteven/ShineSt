@@ -3,12 +3,14 @@
 # ~~~~
 
 # Home page
-GET     /index                         shine.st.blog.controllers.IndexCtrl.index
-GET     /post/detail/:id                      shine.st.blog.controllers.PostCtrl.detail(id: Int)
+GET     /index                          shine.st.blog.controllers.IndexCtrl.index
+GET     /about_me                          shine.st.blog.controllers.IndexCtrl.aboutMe(typeName ="me")
+GET     /about_me/:typeName                          shine.st.blog.controllers.IndexCtrl.aboutMe(typeName:String)
+GET     /post/detail/:id                shine.st.blog.controllers.PostCtrl.detail(id: Int)
 
 # Categories
-GET     /categories                         @shine.st.blog.controllers.CategoriesCtrl.count
-GET     /categories/:categoryName           @shine.st.blog.controllers.CategoriesCtrl.allCategoriesPost(categoryName:String)
+GET     /categories                         shine.st.blog.controllers.CategoriesCtrl.count
+GET     /categories/:categoryName           shine.st.blog.controllers.CategoriesCtrl.allCategoriesPost(categoryName:String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
@@ -17,7 +19,7 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 GET     /javascriptRoutes                   shine.st.blog.controllers.CommonCtrl.javascriptRoutes
 
 # check
-GET     /checkenv                      @shine.st.blog.controllers.CheckCtrl.checkEnv
+GET     /checkenv                      shine.st.blog.controllers.CheckCtrl.checkEnv
 
 # template test
-GET     /template                         @shine.st.blog.controllers.IndexCtrl.template
+GET     /template                         shine.st.blog.controllers.IndexCtrl.template

@@ -9,7 +9,7 @@ import shine.st.blog.services.{CategoriesService, PostService}
   */
 
 class CategoriesCtrl extends Controller with ProviderContext {
-  def count = Action { implicit reqeust =>
+  def count = Action { implicit request =>
     val allCategory = CategoriesService.allFirstHierarchy()
     Ok(shine.st.blog.views.html.count_categories(allCategory))
   }
