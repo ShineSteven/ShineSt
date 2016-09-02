@@ -1,0 +1,47 @@
+@import helper._
+@import shine.st.blog.model.FormData.PostData
+@import shine.st.blog.common.CustomizeContext
+@import play.api.Play.current
+@import play.api.i18n.Messages.Implicits._
+
+@(postForm:Form[PostData])(implicit customizeContext: CustomizeContext)
+
+
+@front(s"add post") {
+
+<div class="add post">
+    <form class="ui form" id="post_form" method="post" action="/backend/add_post">
+        <div class="field">
+            <label>title</label>
+            <input name="title" placeholder="title" type="text">
+        </div>
+
+        <div class="field">
+            <label>file</label>
+            <input name="file_name" id="file_name" type="file">
+            <input name="html_content" id="html_content" type="hidden">
+            <input name="md_content" id="md_content" type="hidden">
+        </div>
+
+        <div class="field">
+            <label>categories</label>
+            <div class="ui search selection dropdown">
+                <input name="category_id" type="hidden">
+                <i class="dropdown icon"></i>
+                <input class="search" type="text" tabindex="0">
+                <div class="default text">categories</div>
+                <div id="categories_menu" class="menu">
+
+                </div>
+            </div>
+        </div>
+        <button class="ui button" type="submit">Submit</button>
+    </form>
+</div>
+
+<script type="text/javascript" src="/assets/javascripts/add_post.js"></script>
+
+}
+
+
+

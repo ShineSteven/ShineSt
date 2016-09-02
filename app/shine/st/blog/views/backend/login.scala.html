@@ -1,0 +1,40 @@
+@import helper._
+@import shine.st.blog.model.FormData.LoginData
+@import shine.st.blog.common.CustomizeContext
+@import play.api.Play.current
+@import play.api.i18n.Messages.Implicits._
+
+@(loginData:Form[LoginData])(implicit customizeContext: CustomizeContext, flash: Flash)
+
+
+@front(s"login") {
+
+<div class="login">
+    <form class="ui form" id="login_form" method="post" action="/backend/login">
+        <div class="field">
+            <label>account</label>
+            <input name="account" placeholder="account" type="text">
+        </div>
+
+        <div class="field">
+            <label>password</label>
+            <input name="password" placeholder="password" type="password">
+        </div>
+
+        <button class="ui button" type="submit">Submit</button>
+    </form>
+
+    @if(flash.get("login_message").isDefined) {
+        <div class="ui pointing red basic label">
+            @flash.get("login_message").get
+        </div>
+    }
+
+</div>
+
+<script type="text/javascript" src="/assets/javascripts/login.js"></script>
+
+}
+
+
+

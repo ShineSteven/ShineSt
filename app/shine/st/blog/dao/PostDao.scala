@@ -1,6 +1,6 @@
 package shine.st.blog.dao
 
-import java.sql.ResultSet
+import java.sql.{PreparedStatement, ResultSet}
 
 import shine.st.common.DateTimeUtils
 import shine.st.blog.model.PostModel
@@ -18,5 +18,15 @@ object PostDao extends BaseDao[PostModel] {
       p.setInt(1, categoryId)
       p
     }
+  }
+
+  override protected val insertModelSql: String = "insert into post(title,content_file,create_at,category_id) values(?,?,str_to_date(?,'%Y-%m-%d %T'),?)"
+
+  override protected def insertPs(model: PostModel, ps: PreparedStatement): PreparedStatement = {
+    ps.setString(1, model.title)
+    ps.setString(2, model.contentFile)
+    ps.setString(3, DateTimeUtils.formatDateHour(model.createAt))
+    ps.setInt(4, model.categoryId)
+    ps
   }
 }

@@ -11,6 +11,7 @@ GET     /post/detail/:id                shine.st.blog.controllers.PostCtrl.detai
 # Categories
 GET     /categories                         shine.st.blog.controllers.CategoriesCtrl.count
 GET     /categories/:categoryName           shine.st.blog.controllers.CategoriesCtrl.allCategoriesPost(categoryName:String)
+GET     /categories_backend                 shine.st.blog.controllers.CategoriesCtrl.allCategoriesToBackend
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
@@ -20,6 +21,20 @@ GET     /javascriptRoutes                   shine.st.blog.controllers.CommonCtrl
 
 # check
 GET     /checkenv                      shine.st.blog.controllers.CheckCtrl.checkEnv
+
+# backend
+GET     /backend                        shine.st.blog.controllers.BackendCtrl.index
+
+### backend - post
+GET     /backend/post_list                      shine.st.blog.controllers.BackendCtrl.postList
+GET     /backend/add_post                       shine.st.blog.controllers.BackendCtrl.addPost
+POST    /backend/add_post                       shine.st.blog.controllers.BackendCtrl.addPost
+
+### backend - login
+GET     /backend/login                       shine.st.blog.controllers.BackendCtrl.login
+POST    /backend/login                       shine.st.blog.controllers.BackendCtrl.login
+
+##GET     /backend/test                       shine.st.blog.controllers.BackendCtrl.test
 
 # template test
 GET     /template                         shine.st.blog.controllers.IndexCtrl.template

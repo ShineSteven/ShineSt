@@ -13,7 +13,7 @@ import shine.st.blog._
 object DBUtils {
   Class.forName("com.mysql.jdbc.Driver")
 
-  def connect = DriverManager.getConnection(s"jdbc:mysql://${config.getString("DB.ip").get}/${config.getString("DB.database").get}?user=${config.getString("DB.account").get}&password=${config.getString("DB.pw").get}")
+  def connect = DriverManager.getConnection(s"jdbc:mysql://${config.getString("DB.ip").get}/${config.getString("DB.database").get}?user=${config.getString("DB.user").get}&password=${config.getString("DB.password").get}")
 
   def close(closeable: => AutoCloseable) {
     if (closeable != null)

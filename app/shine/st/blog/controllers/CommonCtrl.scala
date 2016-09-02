@@ -10,7 +10,8 @@ class CommonCtrl extends Controller {
   def javascriptRoutes = Action { implicit request =>
     Ok(
       JavaScriptReverseRouter("jsRoutes")(
-        routes.javascript.CategoriesCtrl.count
+        routes.javascript.CategoriesCtrl.count,
+        routes.javascript.CategoriesCtrl.allCategoriesToBackend
       )
     ).as("text/javascript")
   }

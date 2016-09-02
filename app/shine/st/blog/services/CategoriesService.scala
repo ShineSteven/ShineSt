@@ -27,4 +27,8 @@ object CategoriesService {
     }
   }
 
+  def all() = {
+    CategoriesDao.all()
+  }
+
 }
