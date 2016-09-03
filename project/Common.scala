@@ -12,7 +12,7 @@ object Dependency {
   val httpClient = "org.apache.httpcomponents" % "httpclient" % "4.5.2"
   val config = "com.typesafe" % "config" % "1.2.1"
   val c3p0 = "com.mchange" % "c3p0" % "0.9.5.1"
-  val shinestCommon = "shine.st" %% "shinest_common" % "1.0.1.SNAPSHOT"
+  val shinestCommon = "shine.st" %% "shinest_common" % "1.0.1.RELEASE"
 }
 
 /**
