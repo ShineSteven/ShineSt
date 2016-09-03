@@ -23,16 +23,14 @@
         <div class="ui grid">
             <div class="row">
                 <div class="six wide column"></div>
-                <div class="five wide column">
+                <div class="five wide column"></div>
+                <div class="right aligned five wide column">
+                    <div class="ui label">
                     @if(post.updateAt.isDefined) {
-                    <div class="ui label">
                         update at @(DateTimeUtils.formatDateHour(post.updateAt))
-                    </div>
-                    }
-                </div>
-                <div class="five wide column">
-                    <div class="ui label">
+                    } else {
                         create at @(DateTimeUtils.formatDateHour(post.createAt))
+                    }
                     </div>
                 </div>
             </div>
