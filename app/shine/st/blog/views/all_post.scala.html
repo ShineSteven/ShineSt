@@ -1,0 +1,41 @@
+@import shine.st.blog.model.Vo.HomePostVo
+@import shine.st.blog.common.CustomizeContext
+@import shine.st.common.DateTimeUtils
+@(homePostList: List[HomePostVo])(implicit customizeContext: CustomizeContext)
+
+@for(post <- homePostList) {
+
+<div class="post">
+    <div class="post title">
+        <a class="ui huge teal header" href="/static/post/scala/@(post.staticPageName)">@(post.title)</a>
+    </div>
+
+    <div class="markdown-preview">
+        <div class="post content">
+            @Html(post.brief)
+        </div>
+    </div>
+
+    <div class="post tail">
+        <hr>
+        <div class="ui grid">
+            <div class="six wide column"></div>
+            <div class="five wide column"></div>
+            <div class="right aligned five wide column">
+                <a class="ui medium blue header" href="/static/post/scala/@(post.staticPageName)">(more...)</a>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+}
+
+
+
+
+
+
+

@@ -22,7 +22,9 @@ class BackendCtrl extends Controller with ProviderContext {
       "file_name" -> nonEmptyText,
       "md_content" -> nonEmptyText,
       "html_content" -> nonEmptyText,
-      "category_id" -> number
+      "category_id" -> number,
+      "brief_way" -> number,
+      "brief" -> optional(text)
     )(PostData.apply)(PostData.unapply)
   )
 
@@ -61,7 +63,10 @@ class BackendCtrl extends Controller with ProviderContext {
               S3.putObject(blogBucketName, s"${postData.fileName}.html", postData.htmlContent)
               S3.putObject(blogBucketName, postData.fileName, postData.htmlContent)
               PostService.insertPost(postData)
-              Ok(s"insert post - ${postData.title} - OK")
+              if (postData.briefWay == 2)
+                PostService.insertBrief(postData)
+
+              Redirect(shine.st.blog.controllers.routes.BackendCtrl.addPost()).flashing("post_message" -> postData.title)
             }
           )
       }

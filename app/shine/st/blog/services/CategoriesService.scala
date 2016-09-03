@@ -1,8 +1,8 @@
 package shine.st.blog.services
 
 import shine.st.blog.dao.{CategoriesDao, PostDao}
-import shine.st.blog.model.CategoriesModel
-import shine.st.blog.model.vo.CategoriesVO
+import shine.st.blog.model.Model.CategoriesModel
+import shine.st.blog.model.Vo.CategoriesVo
 
 /**
   * Created by shinest on 2016/5/21.
@@ -11,7 +11,7 @@ object CategoriesService {
   def allFirstHierarchy() = {
     PostDao.all().groupBy(_.categoryId).map { case (k, v) =>
       findFirstHierarchyById(k) match {
-        case Some(c) => CategoriesVO(c.id, c.name, c.description, v.size)
+        case Some(c) => CategoriesVo(c.id, c.name, c.description, v.size)
         case None => throw new Exception
       }
     }.toList

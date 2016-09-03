@@ -2,7 +2,7 @@ package shine.st.blog.dao
 
 import java.sql.{PreparedStatement, ResultSet}
 
-import shine.st.blog.model.CategoriesModel
+import shine.st.blog.model.Model.CategoriesModel
 import shine.st.common.{DateTimeUtils, NumberUtils}
 
 /**

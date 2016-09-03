@@ -5,7 +5,7 @@ package shine.st.blog.model
   */
 object FormData {
 
-  case class PostData(title: String, fileName: String, mdContent: String, htmlContent: String, categoryId: Int)
+  case class PostData(title: String, fileName: String, mdContent: String, htmlContent: String, categoryId: Int, briefWay: Int, brief: Option[String])
 
   case class LoginData(account: String, password: String)
 

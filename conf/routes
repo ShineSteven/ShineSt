@@ -37,4 +37,4 @@ POST    /backend/login                       shine.st.blog.controllers.BackendCt
 ##GET     /backend/test                       shine.st.blog.controllers.BackendCtrl.test
 
 # template test
-GET     /template                         shine.st.blog.controllers.IndexCtrl.template
+GET     /template_test                         shine.st.blog.controllers.IndexCtrl.templateTest

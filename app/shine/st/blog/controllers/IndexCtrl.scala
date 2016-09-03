@@ -12,9 +12,9 @@ import shine.st.common.{DateTimeUtils, IOUtils}
   */
 class IndexCtrl extends Controller with ProviderContext {
   def index = Action { implicit request =>
-    val allPost = PostService.all
-    Ok(shine.st.blog.views.html.index(allPost))
+    Ok(shine.st.blog.views.html.index(PostService.homePosts))
   }
+
 
   def aboutMe(typeName: String) = Action { implicit request =>
     config.getString(s"about.$typeName.file_name") match {
@@ -22,17 +22,19 @@ class IndexCtrl extends Controller with ProviderContext {
         val s3AboutMe = S3.getObject(blogBucketName, fileName)
         val meta = s3AboutMe.getObjectMetadata
         val content = IOUtils.inputStreamToString(s3AboutMe.getObjectContent)
-//FIXME config to map
-        Ok(shine.st.blog.views.html.about_me(config.getString(s"about.$typeName.title").get,(content, DateTimeUtils.getDateTimeOptFromDate(meta.getLastModified))))
-      //      FIXME add reuse error page
-      case None => Ok(shine.st.blog.views.html.about_me("error",("about me key wrod error", None)))
-    }
 
+        //FIXME config to map
+        Ok(shine.st.blog.views.html.about_me(config.getString(s"about.$typeName.title").get, (content, DateTimeUtils.getDateTimeOptFromDate(meta.getLastModified))))
+
+      case None =>
+        //FIXME add reuse error page
+        Ok(shine.st.blog.views.html.about_me("error", ("about me key wrod error", None)))
+    }
 
   }
 
 
-  def template = Action { implicit reqeust =>
-    Ok(shine.st.blog.views.html.template("shine/st/blog/test"))
+  def templateTest = Action { implicit reqeust =>
+    Ok(shine.st.blog.views.html.template_test("shine/st/blog/test"))
   }
 }

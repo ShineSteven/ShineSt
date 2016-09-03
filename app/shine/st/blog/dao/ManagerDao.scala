@@ -2,7 +2,7 @@ package shine.st.blog.dao
 
 import java.sql.{PreparedStatement, ResultSet}
 
-import shine.st.blog.model.ManagerModel
+import shine.st.blog.model.Model.ManagerModel
 import shine.st.common.DateTimeUtils
 
 object ManagerDao extends BaseDao[ManagerModel] {

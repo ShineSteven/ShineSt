@@ -31,6 +31,9 @@ trait BaseDao[A] extends Query with Insert {
     }
   }
 
+
+
+
   def all(): List[A] = {
     list(allSql)(p => p)
   }

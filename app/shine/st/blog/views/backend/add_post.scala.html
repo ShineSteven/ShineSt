@@ -4,13 +4,13 @@
 @import play.api.Play.current
 @import play.api.i18n.Messages.Implicits._
 
-@(postForm:Form[PostData])(implicit customizeContext: CustomizeContext)
+@(postForm:Form[PostData])(implicit customizeContext: CustomizeContext, flash: Flash)
 
 
 @front(s"add post") {
 
 <div class="add post">
-    <form class="ui form" id="post_form" method="post" action="/backend/add_post">
+    <form class="ui form success" id="post_form" method="post" action="/backend/add_post">
         <div class="field">
             <label>title</label>
             <input name="title" placeholder="title" type="text">
@@ -31,10 +31,28 @@
                 <input class="search" type="text" tabindex="0">
                 <div class="default text">categories</div>
                 <div id="categories_menu" class="menu">
-
                 </div>
             </div>
         </div>
+        <div class="field">
+            <div class="ui checkbox">
+                <input class="hidden" type="checkbox" tabindex="0">
+                <input name="brief_way" id="brief_way" type="hidden" value="2">
+                <label>use the first five lines.</label>
+            </div>
+        </div>
+        <div class="field">
+            <label>Brief</label>
+            <textarea name="brief"></textarea>
+        </div>
+
+        @if(flash.get("post_message").isDefined) {
+        <div class="ui success message">
+            <div class="header">Form Completed</div>
+            <p>You're all posted up for the - @flash.get("post_message").get -. </p>
+        </div>
+        }
+
         <button class="ui button" type="submit">Submit</button>
     </form>
 </div>

@@ -52,4 +52,14 @@ $('#file_name').change(function( event ) {
     reader.readAsText(stream);
 });
 
+$('.ui.checkbox').checkbox().first().checkbox({
+    onChange: function() {
+        var checked = this.checked
+        var value = (checked && 1) || 2;
+        $('#brief_way').val(value);
+        var textarea = $('textarea')
+        textarea.attr('disabled',checked);
+        textarea.val('');
+    }
+});
 
