@@ -1,51 +1,9 @@
-@import shine.st.blog.model.vo.PostVO
+@import shine.st.blog.model.Vo.HomePostVo
 @import shine.st.blog.common.CustomizeContext
-@import shine.st.common.DateTimeUtils
-@(postList: List[PostVO])(implicit customizeContext: CustomizeContext)
+@(homePostList: List[HomePostVo])(implicit customizeContext: CustomizeContext)
 
 
-@front("") {
-@for(post <- postList) {
-
-<div class="post">
-    <div class="post title">
-        <a class="ui huge teal header" href="/static/post/scala/@(post.staticPageName)">@(post.title)</a>
-    </div>
-
-    <div class="markdown-preview">
-        <div class="post content">
-            @Html(post.content)
-        </div>
-    </div>
-
-    <div class="post tail">
-        <hr>
-
-        <div class="ui grid">
-            <div class="six wide column"></div>
-            <div class="five wide column">
-                @if(post.updateAt.isDefined) {
-                <div class="ui label">
-                    update at @(DateTimeUtils.formatDateHour(post.updateAt))
-                </div>
-                }
-            </div>
-            <div class="five wide column">
-                <div class="ui label">
-                    create at @(DateTimeUtils.formatDateHour(post.createAt))
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-}
-
-}
+@front("") { @all_post(homePostList) }
 
 
 

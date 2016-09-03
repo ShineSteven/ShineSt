@@ -2,14 +2,10 @@ package shine.st.blog.dao
 
 import java.sql.{Connection, PreparedStatement, ResultSet}
 
-import shine.st.blog.common.{ConnectionPool, DBUtils}
+import shine.st.blog.common.DBUtils
 
 
 trait Query {
-  implicit def connect = {
-    ConnectionPool.getConnection()
-  }
-
   def query[A](sql: String)(p: PreparedStatement => PreparedStatement)(r: ResultSet => A)(implicit c: Connection): A = {
     lazy val conn = c
     lazy val ps = p(conn.prepareStatement(sql))

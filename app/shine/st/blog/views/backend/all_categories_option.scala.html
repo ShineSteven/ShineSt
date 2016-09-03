@@ -1,0 +1,10 @@
+@(categories: List[(Int,String)])
+
+@for(c <- categories) {
+    <div class="item" data-value="@c._1">@c._2</div> 
+}
+
+
+
+
+

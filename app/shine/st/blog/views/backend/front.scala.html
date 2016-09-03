@@ -1,0 +1,91 @@
+@import shine.st.blog.common.CustomizeContext
+@import play.api.mvc.{Action, Controller}
+@(functionName:String)(content: Html)(implicit customizeContext: CustomizeContext)
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta content="text/html" charset="UTF-8">
+    <meta name="keywords" content="Scala tutorials"/>
+    <title>shinest.cc | Backend Stage | @functionName</title>
+
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="/assets/semantic/semantic.js"></script>
+    <script type="text/javascript"
+            src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/markdown-it/7.0.1/markdown-it.min.js"></script>
+    <script type="text/javascript" src="@shine.st.blog.controllers.routes.CommonCtrl.javascriptRoutes"></script>
+
+    <link rel="stylesheet" type="text/css" href="/assets/semantic/semantic.css">
+    <!--<link rel="stylesheet" type="text/css" href="/assets/stylesheets/markdown.css">-->
+
+    <style type="text/css">
+
+        body {
+            background-color: rgb(245,245,245);
+        }
+        .main.container {
+        margin-top: 1em;
+        }
+
+        .ui.footer.segment {
+        margin: 5em 0em 0em;
+        padding: 5em 0em;
+        }
+
+        .comment {
+          margin-top: 2.5em;
+        }
+
+        .post.title {
+            margin-bottom:1.5em;
+        }
+
+        .post.tail {
+            margin-top: 1em;
+            margin-bottom:3em;
+        }
+
+
+    </style>
+</head>
+<body>
+<div class="ui grid">
+    <div class="sixteen column row">
+        <div class="one wide column"></div>
+        <div class="two wide column"></div>
+        <div class="eleven wide column">
+
+            <!--<div class="ui main text container">-->
+            @header(functionName)
+            <!--</div>-->
+        </div>
+        <div class="two wide column"></div>
+    </div>
+
+    <div class="sixteen column row">
+        <div class="one wide column"></div>
+        <div class="two wide column">
+            <div class="ui one column grid">
+                <div class="column"></div>
+                <div class="column" id="category">
+
+                </div>
+            </div>
+        </div>
+        <div class="eleven wide column">
+
+            <div class="ui text container">
+                @content
+            </div>
+
+        </div>
+        <div class="two wide column"></div>
+
+    </div>
+</div>
+
+
+</body>
+</html>
