@@ -1,22 +1,22 @@
 # Shine St Blog code
-架構
+### 架構
 ```
-apache -> play framwrok -> mariadb
+Apache -- Play Framework -- MariaDB
+          |
+          +--------------- Amazon S3
 ```
-使用Scala開發，apache放`.html`檔用，
+後端程式使用Scala開發，ui使用`semantic-ui`，
 
-post貼文來源為amazon s3，用markdown編輯post內容，匯出成html後上傳到amazon S3
+貼文內容來源為Amazon S3，
 
-
-### note
-* CHARSET is `UTF-8`
+用markdown編輯post內容後，於`localhost:9000/backend/add_post`後台新增貼文。
 
 ### pre package
 * Scala: `2.11.8`
 * Java: `1.8.77`
-* MaraiDB: `10.1.14`
+* MariaDB: `10.1.14`
 * apache server: `2.4.18`
-
+* curl
 
 ### DB Schema
 ##### categories
@@ -48,6 +48,32 @@ CREATE TABLE `post` (
   CONSTRAINT `fk_category_id` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`)
 ) DEFAULT CHARSET=utf8;
 ```
+
+##### manager
+```
+CREATE TABLE `manager` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `account` varchar(20) NOT NULL,
+  `alias_name` varchar(30) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `create_at` datetime NOT NULL,
+  `status` TINYINT,
+PRIMARY KEY (`id`)
+) DEFAULT CHARSET=utf8;
+```
+
+##### brief
+```
+CREATE TABLE `brief` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `post_id` int NOT NULL,
+  `content` varchar(100) NOT NULL,
+PRIMARY KEY (`id`),
+KEY `fk_post_id` (`post_id`),
+CONSTRAINT `fk_post_id` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`)
+) DEFAULT CHARSET=utf8;
+```
+
 
 ### config Setting
 ##### DB & amazon s3 config on
@@ -94,6 +120,19 @@ activator clean dist
 之後將 `target/universal/shinest.zip` copy到server 上做unzip
 
 ##### run
+需在`-Dplay.crypto.secret` 此參數加入你自己的 secret key(隨意)
 ```
-./shinest/bin/shinest -Dconfig.resource=production/application.conf -Dlogger.resource=production/logback.xml
+./shinest/bin/shinest -Dconfig.resource=production/application.conf -Dlogger.resource=production/logback.xml -Dplay.crypto.secret="${secret key}"
 ```
+
+### backstage
+##### manager
+manager table password sample，使用sha256做hash
+```
+insert into manager (account,alias_name,password,create_at,status) values('administrator','Administrator', sha2(concat('administrator','test'),256),now(),1);
+```
+
+### note
+* CHARSET is `UTF-8`
+* view的所有url皆使用存在`apache`上的靜態頁，故需要執行`etc/makeStatic.sh`，batch程式還未撰寫，需手動加`curl` 指令上去。
+* 動態頁url可參考`conf/routes`

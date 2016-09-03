@@ -1,6 +1,6 @@
 
 name := """ShineSt"""
-version := "1.0.4.RELEASE"
+version := "1.0.5.RELEASE"
 
 packageName in Universal := "shinest"
 
