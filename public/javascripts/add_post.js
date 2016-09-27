@@ -8,7 +8,7 @@ $(document).ready(function() {
                 $("#categories_menu").html(categoryHtml);
                 $('.ui.selection.dropdown').dropdown();
             }).fail(function(xhr, status, errorThrown) {
-                alert("Sorry, there was a problem!");
+                console.log("Ajax: Sorry, there was a problem!");
                 console.log("Error: " + errorThrown);
                 console.log("Status: " + status);
                 console.dir(xhr);

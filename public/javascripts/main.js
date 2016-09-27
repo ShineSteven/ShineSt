@@ -9,7 +9,7 @@
             console.log(categoryHtml);
             $("#category").html(categoryHtml);
         }).fail(function(xhr, status, errorThrown) {
-            alert("Sorry, there was a problem!");
+            console.log("Ajax: Sorry, there was a problem!");
             console.log("Error: " + errorThrown);
             console.log("Status: " + status);
             console.dir(xhr);
