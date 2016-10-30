@@ -1,5 +1,7 @@
 package shine.st.blog.controllers
 
+import javax.inject.Singleton
+
 import play.api.mvc.{Action, Controller}
 import shine.st.blog._
 import shine.st.blog.common.ProviderContext
@@ -10,6 +12,7 @@ import shine.st.common.{DateTimeUtils, IOUtils}
 /**
   * Created by shinesteven on 2015/7/28.
   */
+@Singleton
 class IndexCtrl extends Controller with ProviderContext {
   def index = Action { implicit request =>
     Ok(shine.st.blog.views.html.index(PostService.homePosts))

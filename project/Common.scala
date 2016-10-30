@@ -12,7 +12,7 @@ object Dependency {
   val httpClient = "org.apache.httpcomponents" % "httpclient" % "4.5.2"
   val config = "com.typesafe" % "config" % "1.2.1"
   val c3p0 = "com.mchange" % "c3p0" % "0.9.5.1"
-  val shinestCommon = "shine.st" %% "shinest_common" % "1.0.1.RELEASE"
+  val shinestCommon = "shine.st" %% "common" % "1.0.2.SNAPSHOT"
 }
 
 /**
@@ -32,7 +32,6 @@ object ShineStBuild extends Build {
 
 
   lazy val rootThirdPartyDependency = Seq(
-    jdbc,
     specs2 % Test,
     mysql,
     aws,
@@ -42,13 +41,16 @@ object ShineStBuild extends Build {
     shinestCommon
   )
 
-  lazy val commonDependency = Seq("org.scala-lang" % "scala-reflect" % "2.11.8",
+  lazy val commonDependency = Seq(
+    jdbc,
+    cache,
+    ws,
+    "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test,
+    "org.scala-lang" % "scala-reflect" % "2.11.8",
     "org.scala-lang.modules" % "scala-xml_2.11" % "1.0.4",
     "org.scalatest" %% "scalatest" % "2.2.4" % "test"
   )
 
 
   lazy val root = (project in file(".")).enablePlugins(PlayScala).settings(commonSettings: _*).settings(libraryDependencies ++= (commonDependency ++ rootThirdPartyDependency))
-
-
 }
