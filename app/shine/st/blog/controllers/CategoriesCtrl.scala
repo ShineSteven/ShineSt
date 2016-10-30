@@ -1,5 +1,7 @@
 package shine.st.blog.controllers
 
+import javax.inject.Singleton
+
 import play.api.mvc.{Action, Controller}
 import shine.st.blog.common.ProviderContext
 import shine.st.blog.services.{CategoriesService, PostService}
@@ -8,6 +10,7 @@ import shine.st.blog.services.{CategoriesService, PostService}
   * Created by shinesteven on 2015/7/28.
   */
 
+@Singleton
 class CategoriesCtrl extends Controller with ProviderContext {
   def count = Action { implicit request =>
     val allCategory = CategoriesService.allFirstHierarchy()

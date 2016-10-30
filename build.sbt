@@ -1,5 +1,5 @@
 
-name := """ShineSt"""
+name := """blog"""
 version := "1.0.5.RELEASE"
 
 packageName in Universal := "shinest"
