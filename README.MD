@@ -5,11 +5,11 @@ Apache -- Play Framework -- MariaDB
           |
           +--------------- Amazon S3
 ```
-後端程式使用Scala開發，ui使用`semantic-ui`，
+後端程式使用 Scala 開發，ui使用 `semantic-ui`，
 
-貼文內容來源為Amazon S3，
+貼文內容來源為 Amazon S3，
 
-用markdown編輯post內容後，於`localhost:9000/backend/add_post`後台新增貼文。
+用 markdown 編輯 post 內容後，於 `localhost:9000/backend/add_post` 後台新增貼文。
 
 ### pre package
 * Scala: `2.11.8`
@@ -111,18 +111,18 @@ RewriteRule "^/$"  "/index.html"
 
 ### deploy
 ##### package
-1. 須先install 我的[common](https://github.com/ShineSteven/shinest_common)程式
+1. 須先 install 我的[common](https://github.com/ShineSteven/common)程式
 
 2. package use dist
 ```
 activator clean dist
 ```
-之後將 `target/universal/shinest.zip` copy到server 上做unzip
+之後將 `target/universal/shinest.zip` copy 到 server 上做 unzip
 
 ##### run
-需在`-Dplay.crypto.secret` 此參數加入你自己的 secret key(隨意)
+需在`-Dplay.crypto.secret` 此參數加入你自己的 secret key (隨意)
 ```
-./shinest/bin/shinest -Dconfig.resource=production/application.conf -Dlogger.resource=production/logback.xml -Dplay.crypto.secret="${secret key}"
+./shinest/bin/blog -Dconfig.resource=production/application.conf -Dlogger.resource=production/logback.xml -Dplay.crypto.secret="${secret key}"
 ```
 
 ### backstage
@@ -134,5 +134,5 @@ insert into manager (account,alias_name,password,create_at,status) values('admin
 
 ### note
 * CHARSET is `UTF-8`
-* view的所有url皆使用存在`apache`上的靜態頁，故需要執行`etc/makeStatic.sh`，batch程式還未撰寫，需手動加`curl` 指令上去。
-* 動態頁url可參考`conf/routes`
+* view 的所有 url 皆使用儲存在 `apache` 上的靜態頁，故需要執行`etc/makeStatic.sh`，batch程式還未撰寫，需手動加`curl` 指令上去。
+* 動態頁url可參考 `conf/routes`
