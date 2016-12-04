@@ -1,34 +1,40 @@
 package shine.st.blog.services
 
-import shine.st.blog.dao.{CategoriesDao, PostDao}
+import shine.st.blog.dao.CategoriesDao
+import shine.st.blog.handler.{Error, NoData}
 import shine.st.blog.model.Model.CategoriesModel
-import shine.st.blog.model.Vo.CategoriesVo
+
+import scala.annotation.tailrec
 
 /**
   * Created by shinest on 2016/5/21.
   */
 object CategoriesService {
-  def allFirstHierarchy() = {
-    PostDao.all().groupBy(_.categoryId).map { case (k, v) =>
-      findFirstHierarchyById(k) match {
-        case Some(c) => CategoriesVo(c.id, c.name, c.description, v.size)
-        case None => throw new Exception
-      }
-    }.toList
+
+  def allFirstHierarchy: List[(String, Int)] = {
+    val allPost = PostService.all
+    val allFirstCategories = allPost.map(_.categoryId).distinct.map(id => id -> findFirstHierarchyById(id)).toMap
+
+    allPost.groupBy(post => allFirstCategories(post.categoryId)).map { case (k, v) => k.name -> v.size }.toList
   }
 
-  def findFirstHierarchyById(id: Int): Option[CategoriesModel] = {
+  @tailrec
+  def findFirstHierarchyById(id: Int): CategoriesModel = {
     CategoriesDao.queryById(id) match {
-      case Some(c) => c.parentId match {
-        case Some(parentId) => findFirstHierarchyById(parentId)
-        case None => Some(c)
-      }
-      case None => None
+      case Some(c) =>
+        if (c.parentId.isDefined)
+          findFirstHierarchyById(c.parentId.get)
+        else
+          c
+      case None => throw Error("no categories")
     }
   }
 
-  def all() = {
-    CategoriesDao.all()
+  def all = {
+    CategoriesDao.all match {
+      case Some(list) => list
+      case None => throw NoData("no categories")
+    }
   }
 
 }

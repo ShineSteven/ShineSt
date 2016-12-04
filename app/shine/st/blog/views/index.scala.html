@@ -1,9 +1,9 @@
 @import shine.st.blog.model.Vo.HomePostVo
 @import shine.st.blog.common.CustomizeContext
-@(homePostList: List[HomePostVo])(implicit customizeContext: CustomizeContext)
+@(homePostList: List[HomePostVo])
 
 
-@front("") { @all_post(homePostList) }
+@front("Scala, Data Science")("Scala, Data Science") { @all_post(homePostList) }
 
 
 

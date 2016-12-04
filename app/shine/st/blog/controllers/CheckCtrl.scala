@@ -1,18 +1,17 @@
 package shine.st.blog.controllers
 
+import javax.inject.Inject
+
 import com.google.inject.Singleton
-import com.typesafe.config.ConfigFactory
 import play.api.mvc.{Action, Controller}
-import shine.st.blog.common.ProviderContext
 
 @Singleton
-class CheckCtrl extends Controller with ProviderContext {
-  val config = ConfigFactory.load()
+class CheckCtrl @Inject()(action: BlogAction, configuration: play.api.Configuration) extends Controller {
 
   var currentCount = 0
 
-  def checkEnv() = Action {
+  def checkEnv() = action {
     currentCount += 1
-    Ok(s"current env ${config.getString("env.debug")} : $currentCount")
+    Ok(s"current env ${configuration.getString("env.debug").get} : $currentCount")
   }
 }

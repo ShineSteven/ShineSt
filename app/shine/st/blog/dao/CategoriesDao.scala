@@ -14,23 +14,17 @@ object CategoriesDao extends BaseDao[CategoriesModel] {
   override protected val insertModelSql: String = "insert into categories(parent_id,name,create_at,description) values(?,?,str_to_date(?,'%Y-%m-%d %T'),?)"
 
   override def generate(rs: ResultSet) = {
-    CategoriesModel(rs.getInt("ID"), NumberUtils.stringToInt(rs.getString("parent_id")), rs.getString("name"), DateTimeUtils.getDateTimeOptFromDate(rs.getTimestamp("create_at")).get, DateTimeUtils.getDateTimeOptFromDate(rs.getTimestamp("update_at")), Option(rs.getString("description")))
+    CategoriesModel(rs.getInt("ID"), NumberUtils.strTrans[Int](rs.getString("parent_id")), rs.getString("name"), DateTimeUtils.getDateTimeOptFromDate(rs.getTimestamp("create_at")).get, DateTimeUtils.getDateTimeOptFromDate(rs.getTimestamp("update_at")), Option(rs.getString("description")), rs.getString("keywords"))
   }
 
   def queryByName(name: String): Option[CategoriesModel] = {
-    query("select * from categories where lower(name) = ?") { ps =>
+    queryBy("select * from categories where lower(name) = ?") { ps =>
       ps.setString(1, name)
       ps
-    } { rs =>
-      if (rs.next()) {
-        Option(generate(rs))
-      } else {
-        None
-      }
     }
   }
 
-  def queryByParentId(id: Int): List[CategoriesModel] = {
+  def queryByParentId(id: Int): Option[List[CategoriesModel]] = {
     list("select * from categories where parent_id = ?") { ps =>
       ps.setInt(1, id)
       ps

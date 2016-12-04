@@ -8,7 +8,7 @@ import shine.st.blog._
 
 
 /**
-  * Created by shinesteven on 2015/8/13.
+  * Created by shinest on 2015/8/13.
   */
 object DBUtils {
   Class.forName("com.mysql.jdbc.Driver")

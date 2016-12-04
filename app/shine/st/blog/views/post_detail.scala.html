@@ -1,10 +1,10 @@
 @import shine.st.blog.model.Vo.PostVo
 @import shine.st.blog.common.CustomizeContext
 @import shine.st.common.DateTimeUtils
-@(post: PostVo)(implicit customizeContext: CustomizeContext)
+@(post: PostVo)
 
 
-@front(s"${post.title}") {
+@front(post.category.keywords)(post.title) {
 
 <div class="post">
     <div class="post title">

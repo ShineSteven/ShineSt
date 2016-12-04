@@ -6,7 +6,6 @@ import play.api.data.Form
 import play.api.data.Forms._
 import play.api.mvc.{Action, Controller}
 import shine.st.blog._
-import shine.st.blog.common.ProviderContext
 import shine.st.blog.model.FormData.{LoginData, PostData}
 import shine.st.blog.services.{LoginService, PostService}
 import shine.st.common.aws.S3
@@ -15,7 +14,7 @@ import shine.st.common.aws.S3
   * Created by shinest on 2016/8/21.
   */
 @Singleton
-class BackendCtrl extends Controller with ProviderContext {
+class BackendCtrl @Inject()(action: BlogAction) extends Controller {
   val postForm = Form(
     mapping(
       "title" -> nonEmptyText,
@@ -35,7 +34,7 @@ class BackendCtrl extends Controller with ProviderContext {
     )(LoginData.apply)(LoginData.unapply)
   )
 
-  def index = Action { implicit request =>
+  def index = action { implicit request =>
     request.session.get("connected").map { user =>
       Ok("Hello " + user)
     }.getOrElse {
@@ -45,7 +44,7 @@ class BackendCtrl extends Controller with ProviderContext {
 
   }
 
-  def addPost = Action { implicit request =>
+  def addPost = action { implicit request =>
     if (request.session.get("connected").isDefined) {
       request.method match {
         case "GET" => Ok(shine.st.blog.views.html.backend.add_post(postForm))
@@ -62,9 +61,10 @@ class BackendCtrl extends Controller with ProviderContext {
 
               S3.putObject(blogBucketName, s"${postData.fileName}.html", postData.htmlContent)
               S3.putObject(blogBucketName, postData.fileName, postData.htmlContent)
-              PostService.insertPost(postData)
+              val postId = PostService.insertPost(postData)
+
               if (postData.briefWay == 2)
-                PostService.insertBrief(postData)
+                PostService.insertBrief(postId, postData)
 
               Redirect(shine.st.blog.controllers.routes.BackendCtrl.addPost()).flashing("post_message" -> postData.title)
             }
@@ -74,11 +74,11 @@ class BackendCtrl extends Controller with ProviderContext {
       Redirect(shine.st.blog.controllers.routes.BackendCtrl.login).flashing("login_message" -> "Unauthorized! please login")
   }
 
-  def postList = Action {
+  def postList = action {
     Ok("continue...")
   }
 
-  def login = Action { implicit request =>
+  def login = action { implicit request =>
     request.method match {
       case "GET" =>
         request.session.get("connected").map { user =>

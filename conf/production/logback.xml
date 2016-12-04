@@ -28,7 +28,7 @@
   <!--</appender>-->
 
   <root level="info">
-    <appender-ref ref="STDOUT"/>
+    <appender-ref ref="blog"/>
   </root>
 
   <logger name="shine.st.blog" level="info">

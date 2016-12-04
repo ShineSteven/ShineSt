@@ -4,11 +4,17 @@ import play.api.mvc.Request
 
 trait ProviderContext {
   implicit def customizeContext[A](implicit request: Request[A]): CustomizeContext = {
-    CustomizeContext("shinest.cc", Map("owner" -> "Steven Fan Chiang"))
+    CustomizeContext("shinest.cc", Map("owner" -> "Shine Steven"))
   }
 }
 
 case class CustomizeContext(domain: String, header: Map[String, String])
+
+/* use
+controller extends ProviderContext
+action implicit request
+view (implicit customizeContext: CustomizeContext)
+ */
 
 /*
 

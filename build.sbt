@@ -1,6 +1,6 @@
 
 name := """blog"""
-version := "1.0.5.RELEASE"
+version := "1.0.6"
 
 packageName in Universal := "shinest"
 

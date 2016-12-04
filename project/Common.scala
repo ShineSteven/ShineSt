@@ -1,18 +1,18 @@
 import Dependency._
-import sbt._
-import Keys._
 import play.sbt.PlayImport._
 import play.sbt.PlayScala
+import sbt.Keys._
+import sbt._
 
 object Dependency {
-  val mysql = "mysql" % "mysql-connector-java" % "5.1.37"
-  val joda = "joda-time" % "joda-time" % "2.9.4"
-  val lang3 = "org.apache.commons" % "commons-lang3" % "3.4"
-  val aws = "com.amazonaws" % "aws-java-sdk" % "1.10.27" exclude("commons-logging", "commons-logging")
-  val httpClient = "org.apache.httpcomponents" % "httpclient" % "4.5.2"
-  val config = "com.typesafe" % "config" % "1.2.1"
-  val c3p0 = "com.mchange" % "c3p0" % "0.9.5.1"
-  val shinestCommon = "shine.st" %% "common" % "1.0.2.SNAPSHOT"
+  val mysql = "mysql" % "mysql-connector-java" % "6.0.5"
+  //  val joda = "joda-time" % "joda-time" % "2.9.6"
+  val lang3 = "org.apache.commons" % "commons-lang3" % "3.5"
+  //  val aws = "com.amazonaws" % "aws-java-sdk" % "1.10.27" exclude("commons-logging", "commons-logging")
+  //  val httpClient = "org.apache.httpcomponents" % "httpclient" % "4.5.2"
+  val config = "com.typesafe" % "config" % "1.3.1"
+  val c3p0 = "com.mchange" % "c3p0" % "0.9.5.2"
+  val shinestCommon = "shine.st" %% "common" % "1.0.2"
 }
 
 /**
@@ -34,8 +34,8 @@ object ShineStBuild extends Build {
   lazy val rootThirdPartyDependency = Seq(
     specs2 % Test,
     mysql,
-    aws,
-    joda,
+    //    aws,
+    //    joda,
     lang3,
     c3p0,
     shinestCommon
