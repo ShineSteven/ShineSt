@@ -1,10 +1,9 @@
 package shine.st.blog.controllers
 
-import javax.inject.Singleton
+import javax.inject.{Inject, Singleton}
 
-import play.api.mvc.{Action, Controller}
+import play.api.mvc.Controller
 import shine.st.blog._
-import shine.st.blog.common.ProviderContext
 import shine.st.blog.services.PostService
 import shine.st.common.aws.S3
 import shine.st.common.{DateTimeUtils, IOUtils}
@@ -13,13 +12,13 @@ import shine.st.common.{DateTimeUtils, IOUtils}
   * Created by shinesteven on 2015/7/28.
   */
 @Singleton
-class IndexCtrl extends Controller with ProviderContext {
-  def index = Action { implicit request =>
+class IndexCtrl @Inject()(action: BlogAction) extends Controller {
+  def index = action {
     Ok(shine.st.blog.views.html.index(PostService.homePosts))
   }
 
 
-  def aboutMe(typeName: String) = Action { implicit request =>
+  def aboutMe(typeName: String) = action {
     config.getString(s"about.$typeName.file_name") match {
       case Some(fileName) =>
         val s3AboutMe = S3.getObject(blogBucketName, fileName)
@@ -37,7 +36,7 @@ class IndexCtrl extends Controller with ProviderContext {
   }
 
 
-  def templateTest = Action { implicit reqeust =>
+  def templateTest = action {
     Ok(shine.st.blog.views.html.template_test("shine/st/blog/test"))
   }
 }

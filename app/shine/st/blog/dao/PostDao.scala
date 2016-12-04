@@ -13,18 +13,11 @@ object PostDao extends BaseDao[PostModel] {
     PostModel(rs.getInt("ID"), rs.getString("TITLE"), rs.getString("CONTENT_FILE"), DateTimeUtils.getDateTimeOptFromDate(rs.getTimestamp("create_at")).get, DateTimeUtils.getDateTimeOptFromDate(rs.getTimestamp("update_at")), rs.getInt("category_id"), rs.getByte("brief_way"))
   }
 
-  def queryByCategoryId(categoryId: Int) = {
+  def queryByCategoryId(categoryId: Int): Option[List[PostModel]] = {
     list("select * from post where category_id = ?") { p =>
       p.setInt(1, categoryId)
       p
     }
-  }
-
-  def queryByTitle(title: String) = {
-    list("select * from post where title = ? order by id desc") { p =>
-      p.setString(1, title)
-      p
-    } head
   }
 
   override protected val insertModelSql: String = "insert into post(title,content_file,create_at,category_id,brief_way) values(?,?,now(),?,?)"

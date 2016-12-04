@@ -7,7 +7,7 @@ import org.joda.time.DateTime
   */
 object Model {
 
-  case class CategoriesModel(id: Int, parentId: Option[Int], name: String, createAt: DateTime, updateAt: Option[DateTime], description: Option[String])
+  case class CategoriesModel(id: Int, parentId: Option[Int], name: String, createAt: DateTime, updateAt: Option[DateTime], description: Option[String], keywords: String)
 
   case class BriefModel(id: Int, postId: Int, content: String)
 

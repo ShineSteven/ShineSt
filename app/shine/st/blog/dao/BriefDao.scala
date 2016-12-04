@@ -12,18 +12,12 @@ object BriefDao extends BaseDao[BriefModel] {
     BriefModel(rs.getInt("ID"), rs.getInt("POST_ID"), rs.getString("CONTENT"))
   }
 
-  def queryByCategoryId(categoryId: Int) = {
-    list("select * from post where category_id = ?") { p =>
-      p.setInt(1, categoryId)
-      p
-    }
-  }
 
-  def queryByPostId(postId: Int) = {
-    list("select * from brief where post_id = ?") { ps =>
+  def queryByPostId(postId: Int): Option[BriefModel] = {
+    queryBy("select * from brief where post_id = ?") { ps =>
       ps.setInt(1, postId)
       ps
-    } head
+    }
   }
 
   override protected val insertModelSql: String = "insert into brief(post_id,content) values(?,?)"

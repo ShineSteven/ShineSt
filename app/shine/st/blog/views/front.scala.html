@@ -1,13 +1,13 @@
 @import shine.st.blog.common.CustomizeContext
 @import play.api.mvc.{Action, Controller}
-@(title:String)(content: Html)(implicit customizeContext: CustomizeContext)
+@(keywords:String)(title:String)(content: Html)
 
 <!DOCTYPE html>
 <html>
 <head>
     <meta content="text/html" charset="UTF-8">
-    <meta name="keywords" content="Scala tutorials" />
-    <title>shinest.cc | Scala Tutorials | @title</title>
+    <meta name="keywords" content="@keywords" />
+    <title>shinest.cc | @title</title>
 
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="/assets/semantic/semantic.js"></script>

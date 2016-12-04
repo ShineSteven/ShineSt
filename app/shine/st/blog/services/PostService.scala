@@ -3,8 +3,9 @@ package shine.st.blog.services
 import org.joda.time.DateTime
 import shine.st.blog._
 import shine.st.blog.dao.{BriefDao, CategoriesDao, PostDao}
+import shine.st.blog.handler.NoData
 import shine.st.blog.model.FormData.PostData
-import shine.st.blog.model.Model.{BriefModel, PostModel}
+import shine.st.blog.model.Model.{BriefModel, CategoriesModel, PostModel}
 import shine.st.blog.model.Vo.{CategoriesVo, HomePostVo, PostVo}
 import shine.st.common.IOUtils
 import shine.st.common.aws.S3
@@ -14,9 +15,7 @@ import shine.st.common.aws.S3
   */
 object PostService {
   def homePosts() = {
-    PostDao.all().map {
-      transferToHomePostVo(_)
-    }
+    PostDao.all.get.map(transferToHomePostVo)
   }
 
   def queryById(id: Int) = {
@@ -27,29 +26,40 @@ object PostService {
     }
   }
 
-  def allPostByCategoriesName(categoryName: String) = {
-    val category = CategoriesDao.queryByName(categoryName)
+  def findAllPostByCategoriesName(categoryName: String) = {
+    val opt = CategoriesDao.queryByName(categoryName)
 
-    category.map { c => CategoriesDao.queryByParentId(c.id) } match {
-      case Some(categoriesList) if !categoriesList.isEmpty =>
-        val postList = categoriesList.flatMap { c => PostDao.queryByCategoryId(c.id) }.map(transferToHomePostVo).sortWith {
+    opt match {
+      case Some(categories) =>
+        val categoriesList = categories :: subCategories(categories.id)
+        //        println(categoriesList)
+        val postList = categoriesList.flatMap { c =>
+          PostDao.queryByCategoryId(c.id).map(_.map(transferToHomePostVo))
+        }.flatMap(el => el).sortWith {
           _.createAt.getMillis > _.createAt.getMillis
         }
-        Option(CategoriesVo(category.get.id, category.get.name, category.get.description, postList.size) -> postList)
 
-      case None => None
+        CategoriesVo(categories.id, categories.name, categories.description, categoriesList.map(_.keywords), postList)
+
+      case None => throw NoData(s"nodata with categories name: $categoryName")
     }
 
   }
 
-  def insertPost(p: PostData) = {
+  def subCategories(id: Int): List[CategoriesModel] = {
+    CategoriesDao.queryByParentId(id) match {
+      case Some(c) => c.flatMap(ca => ca :: subCategories(ca.id))
+      case None => Nil
+    }
+  }
+
+  def insertPost(p: PostData): Int = {
     val postModel = PostModel(-1, p.title, s"${p.fileName}.html", new DateTime(), None, p.categoryId, p.briefWay.toByte)
     PostDao.insertWithModel(postModel)
   }
 
-  def insertBrief(p: PostData) = {
-    val sameTitlePost = PostDao.queryByTitle(p.title)
-    val briefModel = BriefModel(-1, sameTitlePost.id, p.brief.get)
+  def insertBrief(postId: Int, postData: PostData) = {
+    val briefModel = BriefModel(-1, postId, postData.brief.get)
     BriefDao.insertWithModel(briefModel)
   }
 
@@ -66,8 +76,16 @@ object PostService {
         val content = IOUtils.inputStreamToString(S3.getObjectContent(blogBucketName, post.contentFile))
         content.split("\n").zipWithIndex.filter(_._2 <= 5).map(_._1).mkString
       case 2 =>
-        BriefDao.queryByPostId(post.id).content
+        BriefDao.queryByPostId(post.id).map(_.content).getOrElse("empty.....")
+
     }
     HomePostVo(post.id, post.title, brief, post.contentFile, post.createAt)
+  }
+
+  def all = {
+    PostDao.all match {
+      case Some(list) => list
+      case None => throw NoData("no posts")
+    }
   }
 }

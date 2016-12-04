@@ -28,6 +28,7 @@ CREATE TABLE `categories` (
   `create_at` datetime NOT NULL,
   `update_at` datetime DEFAULT NULL,
   `description` tinytext,
+  `keywords` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `parent_id` (`parent_id`),
   CONSTRAINT `categories_ibfk_1` FOREIGN KEY (`parent_id`) REFERENCES `categories` (`id`)

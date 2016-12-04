@@ -8,7 +8,7 @@ import shine.st.blog.model.Model.CategoriesModel
   */
 object Vo {
 
-  case class CategoriesVo(id: Int, name: String, description: Option[String], count: Int)
+  case class CategoriesVo(id: Int, name: String, description: Option[String], keywords: List[String], posts: List[HomePostVo])
 
   case class PostVo(id: Int, title: String, content: String, staticPageName: String, createAt: DateTime, updateAt: Option[DateTime], category: CategoriesModel)
 

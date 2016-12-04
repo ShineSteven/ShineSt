@@ -1,7 +1,7 @@
 @import shine.st.blog.model.Vo.HomePostVo
 @import shine.st.blog.common.CustomizeContext
 @import shine.st.common.DateTimeUtils
-@(homePostList: List[HomePostVo])(implicit customizeContext: CustomizeContext)
+@(homePostList: List[HomePostVo])
 
 @for(post <- homePostList) {
 

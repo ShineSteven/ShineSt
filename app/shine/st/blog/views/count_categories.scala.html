@@ -1,14 +1,13 @@
-@import shine.st.blog.model.Vo.CategoriesVo
 @import shine.st.blog.common.CustomizeContext
 
-@(categories: List[CategoriesVo])
+@(categoriesCount: List[(String, Int)])
 
 <div class="ui list">
     <h3 class="ui yellow header">Categories</h3>
-    @for(vo <- categories) {
+    @for(info <- categoriesCount) {
     <div class="item">
         <div class="content">
-            <a href="/static/post/@vo.name.toLowerCase()">@vo.name (@vo.count)</a>
+            <a href="/static/post/@info._1.toLowerCase()">@info._1 (@info._2)</a>
         </div>
     </div>
     }

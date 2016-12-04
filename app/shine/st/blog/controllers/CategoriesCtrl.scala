@@ -1,34 +1,31 @@
 package shine.st.blog.controllers
 
-import javax.inject.Singleton
+import javax.inject.{Inject, Singleton}
 
-import play.api.mvc.{Action, Controller}
-import shine.st.blog.common.ProviderContext
+import akka.actor.ActorSystem
+import play.api.mvc.Controller
 import shine.st.blog.services.{CategoriesService, PostService}
+
+import scala.concurrent.ExecutionContext
 
 /**
   * Created by shinesteven on 2015/7/28.
   */
 
 @Singleton
-class CategoriesCtrl extends Controller with ProviderContext {
-  def count = Action { implicit request =>
-    val allCategory = CategoriesService.allFirstHierarchy()
-    Ok(shine.st.blog.views.html.count_categories(allCategory))
+class CategoriesCtrl @Inject()(action: BlogAction, actorSystem: ActorSystem)(implicit ec: ExecutionContext) extends Controller {
+  def count = action {
+    val categoriesCount = CategoriesService.allFirstHierarchy
+    Ok(shine.st.blog.views.html.count_categories(categoriesCount))
   }
 
-  def allCategoriesPost(categoryName: String) = Action { implicit request =>
-    val post = PostService.allPostByCategoriesName(categoryName)
-    post match {
-      case Some(content) => Ok(shine.st.blog.views.html.all_categories_post(content))
-      case None => Ok(shine.st.blog.views.html.oops("no categories post, see log to know exception"))
-    }
-
+  def allCategoriesPost(categoryName: String) = action {
+    val result = PostService.findAllPostByCategoriesName(categoryName)
+    Ok(shine.st.blog.views.html.all_categories_post(result))
   }
 
-  def allCategoriesToBackend = Action { implicit request =>
-
-    val all = CategoriesService.all()
+  def allCategoriesToBackend = action {
+    val all = CategoriesService.all
     val first = all.filter {
       _.parentId.isEmpty
     }

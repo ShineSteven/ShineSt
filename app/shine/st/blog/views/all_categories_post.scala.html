@@ -2,19 +2,20 @@
 @import shine.st.blog.model.Vo.CategoriesVo
 @import shine.st.blog.common.CustomizeContext
 @import shine.st.common.DateTimeUtils
-@(allCategoriesPost: (CategoriesVo, List[HomePostVo]))(implicit customizeContext: CustomizeContext)
+@(categoriesVo: CategoriesVo)
 
 
-@front("") {
+@front(categoriesVo.keywords.mkString(","))(categoriesVo.name) {
+
 <div class="ui positive message">
     <div class="header">
-        @(allCategoriesPost._1.name)
+        @(categoriesVo.name)
     </div>
-    <p>@(allCategoriesPost._1.description)</p>
+    <p>@(categoriesVo.description)</p>
 </div>
 
 
-@all_post(allCategoriesPost._2)
+@all_post(categoriesVo.posts)
 
 }
 

@@ -1,14 +1,13 @@
 package shine.st.blog.controllers
 
-import javax.inject.Singleton
+import javax.inject.{Inject, Singleton}
 
-import play.api.mvc.{Action, Controller}
-import shine.st.blog.common.ProviderContext
+import play.api.mvc.Controller
 import shine.st.blog.services.PostService
 
 @Singleton
-class PostCtrl extends Controller with ProviderContext {
-  def detail(id: Int) = Action { implicit request =>
+class PostCtrl @Inject()(action: BlogAction) extends Controller {
+  def detail(id: Int) = action {
     val post = PostService.queryById(id)
     Ok(shine.st.blog.views.html.post_detail(post.get))
   }
